@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEADS TRACKER</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050508;
+    --surface: rgba(255,255,255,0.03);
+    --border: rgba(255,255,255,0.07);
+    --cyan: #00f0ff;
+    --purple: #b400ff;
+    --pink: #ff0090;
+    --green: #00ff88;
+    --yellow: #ffcc00;
+    --text: #e0e8f0;
+    --muted: rgba(255,255,255,0.35);
+    --glow-cyan: 0 0 20px rgba(0,240,255,0.4);
+    --glow-purple: 0 0 20px rgba(180,0,255,0.4);
+    --glow-pink: 0 0 20px rgba(255,0,144,0.4);
+    --glow-green: 0 0 20px rgba(0,255,136,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 20% 20%, rgba(180,0,255,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0,240,255,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255,0,144,0.03) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+    animation: bgPulse 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes bgPulse {
+    from { transform: rotate(0deg) scale(1); }
+    to { transform: rotate(3deg) scale(1.05); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px 60px;
+  }
+
+  /* HEADER */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .logo h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(22px, 4vw, 38px);
+    font-weight: 900;
+    letter-spacing: 6px;
+    background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    line-height: 1;
+  }
+
+  .logo-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--cyan);
+    letter-spacing: 4px;
+    opacity: 0.6;
+  }
+
+  .header-date {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* CARDS GRID */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 22px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.3s;
+    backdrop-filter: blur(10px);
+  }
+
+  .card:hover { transform: translateY(-2px); }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--accent, var(--cyan)), transparent 60%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.4;
+  }
+
+  .card.cyan  { --accent: var(--cyan); }
+  .card.purple { --accent: var(--purple); }
+  .card.pink  { --accent: var(--pink); }
+  .card.green { --accent: var(--green); }
+
+  .card-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    font-family: 'Share Tech Mono', monospace;
+  }
+
+  .card-value {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .card.cyan .card-value  { color: var(--cyan);   text-shadow: var(--glow-cyan); }
+  .card.purple .card-value { color: var(--purple); text-shadow: var(--glow-purple); }
+  .card.pink .card-value  { color: var(--pink);   text-shadow: var(--glow-pink); }
+  .card.green .card-value { color: var(--green);  text-shadow: var(--glow-green); }
+
+  .card-sub {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* PROGRESS BAR */
+  .progress-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+  }
+
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .progress-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .progress-pct {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--cyan);
+    text-shadow: var(--glow-cyan);
+  }
+
+  .progress-track {
+    height: 10px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: visible;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
+    box-shadow: 0 0 16px rgba(0,240,255,0.5), 0 0 32px rgba(180,0,255,0.3);
+    transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+  }
+
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 12px var(--cyan), 0 0 24px var(--purple);
+  }
+
+  /* CHART */
+  .chart-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+  }
+
+  .section-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  #chartCanvas {
+    width: 100%;
+    display: block;
+  }
+
+  /* AI MESSAGE */
+  .ai-section {
+    background: linear-gradient(135deg, rgba(0,240,255,0.05), rgba(180,0,255,0.05));
+    border: 1px solid rgba(0,240,255,0.15);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ai-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), var(--purple), transparent);
+  }
+
+  .ai-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .ai-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: var(--glow-green);
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .ai-label-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--green);
+    text-transform: uppercase;
+  }
+
+  #aiMessage {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--text);
+    min-height: 44px;
+  }
+
+  .ai-loading {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    padding: 4px 0;
+  }
+
+  .ai-loading span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--cyan);
+    animation: dotBounce 1.2s ease-in-out infinite;
+  }
+
+  .ai-loading span:nth-child(2) { animation-delay: 0.2s; background: var(--purple); }
+  .ai-loading span:nth-child(3) { animation-delay: 0.4s; background: var(--pink); }
+
+  @keyframes dotBounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+
+  /* BOTTOM ROW */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 600px) { .bottom-row { grid-template-columns: 1fr; } }
+
+  /* FORM */
+  .form-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(10px);
+  }
+
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  input[type="number"], input[type="date"], input[type="text"] {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+    -webkit-appearance: none;
+  }
+
+  input:focus {
+    border-color: var(--cyan);
+    box-shadow: 0 0 12px rgba(0,240,255,0.2);
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1) opacity(0.4); }
+
+  .btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--cyan), var(--purple));
+    color: #000;
+    box-shadow: 0 4px 20px rgba(0,240,255,0.3);
+  }
+
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(0,240,255,0.5); }
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-secondary {
+    background: rgba(255,255,255,0.05);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    margin-top: 8px;
+    font-size: 10px;
+  }
+
+  .btn-secondary:hover { background: rgba(255,255,255,0.08); color: var(--text); }
+
+  /* HISTORY */
+  .history-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(10px);
+    max-height: 340px;
+    overflow-y: auto;
+  }
+
+  .history-section::-webkit-scrollbar { width: 4px; }
+  .history-section::-webkit-scrollbar-track { background: transparent; }
+  .history-section::-webkit-scrollbar-thumb { background: rgba(0,240,255,0.3); border-radius: 4px; }
+
+  .history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+
+  .history-item:last-child { border-bottom: none; }
+
+  .history-date {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  .history-count {
+    font-family: 'Orbitron', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--cyan);
+  }
+
+  .history-bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .history-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--cyan), var(--purple));
+    transition: width 0.5s ease;
+  }
+
+  .del-btn {
+    background: none;
+    border: none;
+    color: rgba(255,60,60,0.4);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .del-btn:hover { color: #ff4444; background: rgba(255,0,0,0.1); }
+
+  .empty-state {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    padding: 20px 0;
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 1px;
+  }
+
+  /* SETTINGS PANEL */
+  .settings-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+  }
+
+  .settings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 600px) { .settings-grid { grid-template-columns: 1fr; } }
+
+  /* NOTIFICATION */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: rgba(10,10,20,0.95);
+    border: 1px solid var(--cyan);
+    box-shadow: var(--glow-cyan);
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    color: var(--cyan);
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 1000;
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* STREAK BADGE */
+  .streak-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, rgba(255,204,0,0.1), rgba(255,120,0,0.1));
+    border: 1px solid rgba(255,204,0,0.3);
+    border-radius: 99px;
+    padding: 4px 12px 4px 8px;
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    color: var(--yellow);
+    margin-top: 8px;
+  }
+
+  .tooltip {
+    position: relative;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card, .stats-grid, .chart-section, .ai-section, .bottom-row > * {
+    animation: fadeIn 0.5s ease forwards;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="logo">
+      <h1 id="goalTitle">LEADS TRACKER</h1>
+      <div class="logo-sub">PERFORMANCE DASHBOARD</div>
+    </div>
+    <div class="header-date">
+      <div id="currentDate"></div>
+      <div id="daysLeft" style="color: var(--cyan); font-size: 13px; margin-top:4px;"></div>
+    </div>
+  </header>
+
+  <!-- SETTINGS -->
+  <div class="settings-section">
+    <div class="section-title">⚙ настройки цели</div>
+    <div class="settings-grid">
+      <div class="field-group">
+        <label>Название цели</label>
+        <input type="text" id="goalName" placeholder="Например: Лиды Q2" />
+      </div>
+      <div class="field-group">
+        <label>Цель (кол-во лидов)</label>
+        <input type="number" id="goalTotal" placeholder="1000" min="1" />
+      </div>
+      <div class="field-group">
+        <label>Дедлайн</label>
+        <input type="date" id="goalDeadline" />
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="saveSettings()">СОХРАНИТЬ ЦЕЛЬ</button>
+  </div>
+
+  <!-- STAT CARDS -->
+  <div class="stats-grid">
+    <div class="card cyan">
+      <div class="card-label">Всего лидов</div>
+      <div class="card-value" id="totalLeads">0</div>
+      <div class="card-sub">из <span id="goalDisplay">—</span></div>
+    </div>
+    <div class="card purple">
+      <div class="card-label">Осталось</div>
+      <div class="card-value" id="remaining">—</div>
+      <div class="card-sub">до цели</div>
+    </div>
+    <div class="card pink">
+      <div class="card-label">Норма в день</div>
+      <div class="card-value" id="dailyNorm">—</div>
+      <div class="card-sub">лидов/день</div>
+    </div>
+    <div class="card green">
+      <div class="card-label">Сегодня</div>
+      <div class="card-value" id="todayCount">0</div>
+      <div id="streakBadge"></div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-section">
+    <div class="progress-header">
+      <div class="progress-title">📈 прогресс к цели</div>
+      <div class="progress-pct" id="progressPct">0%</div>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+    </div>
+  </div>
+
+  <!-- AI MESSAGE -->
+  <div class="ai-section">
+    <div class="ai-label">
+      <div class="ai-dot"></div>
+      <div class="ai-label-text">AI — анализ прогресса</div>
+    </div>
+    <div id="aiMessage"><span style="color: var(--muted); font-size:14px;">Заполни цель и добавь первые лиды — и я проанализирую твой прогресс 🚀</span></div>
+  </div>
+
+  <!-- CHART -->
+  <div class="chart-section">
+    <div class="section-title">📊 динамика по дням</div>
+    <canvas id="chartCanvas" height="180"></canvas>
+  </div>
+
+  <!-- BOTTOM ROW -->
+  <div class="bottom-row">
+    <!-- ADD LEADS -->
+    <div class="form-section">
+      <div class="section-title">➕ добавить лиды</div>
+      <div class="field-group">
+        <label>Дата</label>
+        <input type="date" id="entryDate" />
+      </div>
+      <div class="field-group">
+        <label>Количество лидов</label>
+        <input type="number" id="entryCount" placeholder="0" min="0" />
+      </div>
+      <button class="btn btn-primary" onclick="addEntry()">ДОБАВИТЬ</button>
+      <button class="btn btn-secondary" onclick="refreshAI()">🤖 ОБНОВИТЬ AI АНАЛИЗ</button>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="history-section">
+      <div class="section-title">🗂 история</div>
+      <div id="historyList"><div class="empty-state">нет данных</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let state = {
+  goalName: '',
+  goalTotal: 0,
+  deadline: '',
+  entries: {}  // { "YYYY-MM-DD": count }
+};
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+function init() {
+  const saved = localStorage.getItem('leads_dashboard_v2');
+  if (saved) state = JSON.parse(saved);
+
+  // Set today's date on entry
+  const today = todayStr();
+  document.getElementById('entryDate').value = today;
+
+  // Restore settings
+  if (state.goalName)    document.getElementById('goalName').value    = state.goalName;
+  if (state.goalTotal)   document.getElementById('goalTotal').value   = state.goalTotal;
+  if (state.deadline)    document.getElementById('goalDeadline').value = state.deadline;
+
+  updateCurrentDate();
+  render();
+}
+
+function todayStr() {
+  return new Date().toISOString().slice(0,10);
+}
+
+function save() {
+  localStorage.setItem('leads_dashboard_v2', JSON.stringify(state));
+}
+
+// ─── SETTINGS ────────────────────────────────────────────────────────────────
+function saveSettings() {
+  state.goalName  = document.getElementById('goalName').value.trim() || 'LEADS TRACKER';
+  state.goalTotal = parseInt(document.getElementById('goalTotal').value) || 0;
+  state.deadline  = document.getElementById('goalDeadline').value;
+  save();
+  render();
+  showToast('Цель сохранена ✓');
+  if (getTotalLeads() > 0 || state.goalTotal > 0) getAIMessage();
+}
+
+// ─── ENTRIES ─────────────────────────────────────────────────────────────────
+function addEntry() {
+  const date  = document.getElementById('entryDate').value;
+  const count = parseInt(document.getElementById('entryCount').value);
+  if (!date || isNaN(count) || count < 0) { showToast('Введи дату и количество!'); return; }
+
+  state.entries[date] = (state.entries[date] || 0) + count;
+  save();
+  render();
+  document.getElementById('entryCount').value = '';
+  showToast(`+${count} лидов добавлено ✓`);
+  getAIMessage();
+}
+
+function deleteEntry(date) {
+  delete state.entries[date];
+  save();
+  render();
+  getAIMessage();
+}
+
+// ─── CALCULATIONS ─────────────────────────────────────────────────────────────
+function getTotalLeads() {
+  return Object.values(state.entries).reduce((a, b) => a + b, 0);
+}
+
+function getDaysLeft() {
+  if (!state.deadline) return null;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const dl    = new Date(state.deadline); dl.setHours(0,0,0,0);
+  return Math.max(0, Math.ceil((dl - today) / 86400000));
+}
+
+function getDailyNorm() {
+  const remaining = (state.goalTotal || 0) - getTotalLeads();
+  const daysLeft  = getDaysLeft();
+  if (!daysLeft || daysLeft === 0 || remaining <= 0) return 0;
+  return Math.ceil(remaining / daysLeft);
+}
+
+function getStreak() {
+  const sortedDates = Object.keys(state.entries).sort().reverse();
+  if (!sortedDates.length) return 0;
+  let streak = 0;
+  let check  = new Date(); check.setHours(0,0,0,0);
+  for (let i = 0; i < 365; i++) {
+    const d = check.toISOString().slice(0,10);
+    if (state.entries[d] > 0) {
+      streak++;
+      check.setDate(check.getDate() - 1);
+    } else if (i === 0) {
+      check.setDate(check.getDate() - 1);
+      i = 0; continue;
+    } else break;
+    if (i === 0 && !state.entries[d]) break;
+  }
+  return streak;
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function render() {
+  const total     = getTotalLeads();
+  const goal      = state.goalTotal || 0;
+  const remaining = Math.max(0, goal - total);
+  const daysLeft  = getDaysLeft();
+  const norm      = getDailyNorm();
+  const today     = todayStr();
+  const pct       = goal > 0 ? Math.min(100, Math.round(total / goal * 100)) : 0;
+
+  // Header
+  document.getElementById('goalTitle').textContent = (state.goalName || 'LEADS TRACKER').toUpperCase();
+  if (daysLeft !== null) {
+    document.getElementById('daysLeft').textContent = `⏳ ${daysLeft} дней до дедлайна`;
+  }
+
+  // Cards
+  document.getElementById('totalLeads').textContent  = total.toLocaleString();
+  document.getElementById('goalDisplay').textContent = goal ? goal.toLocaleString() : '—';
+  document.getElementById('remaining').textContent   = goal ? remaining.toLocaleString() : '—';
+  document.getElementById('dailyNorm').textContent   = norm || '—';
+  document.getElementById('todayCount').textContent  = (state.entries[today] || 0).toLocaleString();
+
+  // Streak
+  const streak = getStreak();
+  const sb = document.getElementById('streakBadge');
+  sb.innerHTML = streak > 1 ? `<div class="streak-badge">🔥 ${streak} день подряд</div>` : '';
+
+  // Progress
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+
+  // History
+  renderHistory();
+
+  // Chart
+  renderChart();
+}
+
+function renderHistory() {
+  const list = document.getElementById('historyList');
+  const entries = Object.entries(state.entries).sort((a,b) => b[0].localeCompare(a[0]));
+  if (!entries.length) { list.innerHTML = '<div class="empty-state">нет данных</div>'; return; }
+
+  const maxVal = Math.max(...entries.map(e => e[1]));
+  list.innerHTML = entries.map(([date, count]) => {
+    const pct = maxVal > 0 ? (count / maxVal * 100) : 0;
+    const d = new Date(date + 'T00:00:00');
+    const label = d.toLocaleDateString('ru-RU', { day:'2-digit', month:'short' });
+    return `
+      <div class="history-item">
+        <div class="history-date">${label}</div>
+        <div class="history-bar"><div class="history-bar-fill" style="width:${pct}%"></div></div>
+        <div class="history-count">${count}</div>
+        <button class="del-btn" onclick="deleteEntry('${date}')">✕</button>
+      </div>`;
+  }).join('');
+}
+
+// ─── CHART ────────────────────────────────────────────────────────────────────
+function renderChart() {
+  const canvas = document.getElementById('chartCanvas');
+  const ctx    = canvas.getContext('2d');
+  const dpr    = window.devicePixelRatio || 1;
+  const W      = canvas.offsetWidth;
+  const H      = 180;
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, W, H);
+
+  const entries = Object.entries(state.entries).sort((a,b) => a[0].localeCompare(b[0]));
+  if (entries.length === 0) {
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    ctx.font = '13px Share Tech Mono';
+    ctx.textAlign = 'center';
+    ctx.fillText('нет данных для графика', W/2, H/2);
+    return;
+  }
+
+  const pad = { left: 36, right: 16, top: 16, bottom: 36 };
+  const gW  = W - pad.left - pad.right;
+  const gH  = H - pad.top  - pad.bottom;
+
+  // Running total
+  const cumulative = [];
+  let run = 0;
+  for (const [date, count] of entries) {
+    run += count;
+    cumulative.push({ date, count, total: run });
+  }
+
+  const maxTotal = state.goalTotal || run || 1;
+  const N = cumulative.length;
+  const xStep = N > 1 ? gW / (N - 1) : gW;
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.top + gH - (i / 4) * gH;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + gW, y); ctx.stroke();
+
+    ctx.fillStyle = 'rgba(255,255,255,0.2)';
+    ctx.font = '9px Share Tech Mono';
+    ctx.textAlign = 'right';
+    ctx.fillText(Math.round(maxTotal * i / 4), pad.left - 5, y + 3);
+  }
+
+  // Goal line
+  if (state.goalTotal > 0) {
+    const gy = pad.top;
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = 'rgba(255,0,144,0.4)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(pad.left, gy); ctx.lineTo(pad.left + gW, gy); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(255,0,144,0.6)';
+    ctx.font = '9px Share Tech Mono';
+    ctx.textAlign = 'left';
+    ctx.fillText('ЦЕЛЬ', pad.left + 4, gy - 4);
+  }
+
+  // Fill area under cumulative curve
+  const pts = cumulative.map((d, i) => {
+    const x = pad.left + (N === 1 ? gW / 2 : i * xStep);
+    const y = pad.top  + gH - (d.total / maxTotal) * gH;
+    return { x, y };
+  });
+
+  const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + gH);
+  grad.addColorStop(0, 'rgba(0,240,255,0.25)');
+  grad.addColorStop(1, 'rgba(0,240,255,0)');
+
+  ctx.beginPath();
+  ctx.moveTo(pts[0].x, pad.top + gH);
+  ctx.lineTo(pts[0].x, pts[0].y);
+  for (let i = 1; i < pts.length; i++) {
+    const cp = { x: (pts[i-1].x + pts[i].x) / 2, y: (pts[i-1].y + pts[i].y) / 2 };
+    ctx.quadraticCurveTo(pts[i-1].x, pts[i-1].y, cp.x, cp.y);
+  }
+  ctx.lineTo(pts[pts.length-1].x, pts[pts.length-1].y);
+  ctx.lineTo(pts[pts.length-1].x, pad.top + gH);
+  ctx.closePath();
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Line stroke
+  const lineGrad = ctx.createLinearGradient(pad.left, 0, pad.left + gW, 0);
+  lineGrad.addColorStop(0,   '#00f0ff');
+  lineGrad.addColorStop(0.5, '#b400ff');
+  lineGrad.addColorStop(1,   '#ff0090');
+
+  ctx.beginPath();
+  ctx.moveTo(pts[0].x, pts[0].y);
+  for (let i = 1; i < pts.length; i++) {
+    const cp = { x: (pts[i-1].x + pts[i].x) / 2, y: (pts[i-1].y + pts[i].y) / 2 };
+    ctx.quadraticCurveTo(pts[i-1].x, pts[i-1].y, cp.x, cp.y);
+  }
+  ctx.lineTo(pts[pts.length-1].x, pts[pts.length-1].y);
+  ctx.strokeStyle = lineGrad;
+  ctx.lineWidth = 2.5;
+  ctx.shadowColor = 'rgba(0,240,255,0.6)';
+  ctx.shadowBlur  = 12;
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+
+  // Dots + labels
+  pts.forEach((p, i) => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#00f0ff';
+    ctx.shadowColor = 'rgba(0,240,255,0.8)';
+    ctx.shadowBlur  = 10;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // X label
+    const d = cumulative[i];
+    const dateObj = new Date(d.date + 'T00:00:00');
+    const label   = dateObj.toLocaleDateString('ru-RU', { day: '2-digit', month: 'short' });
+    if (N <= 12 || i % Math.ceil(N / 12) === 0 || i === N - 1) {
+      ctx.fillStyle = 'rgba(255,255,255,0.3)';
+      ctx.font = '9px Share Tech Mono';
+      ctx.textAlign = 'center';
+      ctx.fillText(label, p.x, H - 8);
+    }
+  });
+}
+
+// ─── AI MESSAGE ───────────────────────────────────────────────────────────────
+async function getAIMessage() {
+  const total    = getTotalLeads();
+  const goal     = state.goalTotal || 0;
+  const daysLeft = getDaysLeft();
+  const norm     = getDailyNorm();
+  const pct      = goal > 0 ? Math.round(total / goal * 100) : 0;
+  const today    = state.entries[todayStr()] || 0;
+
+  if (!goal) return;
+
+  const aiEl = document.getElementById('aiMessage');
+  aiEl.innerHTML = '<div class="ai-loading"><span></span><span></span><span></span></div>';
+
+  const prompt = `Ты — личный AI-коуч по продажам. Дай короткий мотивационный комментарий (2-3 предложения) на русском языке.
+
+Данные:
+- Цель: ${goal} лидов
+- Собрано: ${total} лидов (${pct}%)
+- Осталось: ${Math.max(0, goal - total)} лидов
+- Дней до дедлайна: ${daysLeft !== null ? daysLeft : 'не указан'}
+- Норма на сегодня: ${norm} лидов/день
+- Сегодня добавлено: ${today} лидов
+
+Будь конкретным, энергичным, используй цифры. Не используй markdown форматирование.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.find(b => b.type === 'text')?.text || 'Анализ недоступен.';
+    aiEl.textContent = text;
+  } catch(e) {
+    aiEl.textContent = `Прогресс: ${pct}% от цели. ${daysLeft ? `Осталось ${daysLeft} дней, нужно по ${norm} лидов в день.` : 'Укажи дедлайн для точного анализа.'}`;
+  }
+}
+
+function refreshAI() { getAIMessage(); }
+
+// ─── UTILS ────────────────────────────────────────────────────────────────────
+function updateCurrentDate() {
+  const now = new Date();
+  document.getElementById('currentDate').textContent =
+    now.toLocaleDateString('ru-RU', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  setTimeout(updateCurrentDate, 60000);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ─── RESPONSIVE CHART ─────────────────────────────────────────────────────────
+window.addEventListener('resize', () => renderChart());
+
+// ─── START ────────────────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
