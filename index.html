@@ -7,344 +7,145 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #050508;
-    --surface: rgba(255,255,255,0.03);
-    --border: rgba(255,255,255,0.07);
-    --cyan: #00f0ff;
-    --purple: #b400ff;
-    --pink: #ff0090;
-    --green: #00ff88;
-    --yellow: #ffcc00;
-    --text: #e0e8f0;
-    --muted: rgba(255,255,255,0.35);
-    --glow-cyan: 0 0 20px rgba(0,240,255,0.4);
-    --glow-purple: 0 0 20px rgba(180,0,255,0.4);
-    --glow-pink: 0 0 20px rgba(255,0,144,0.4);
-    --glow-green: 0 0 20px rgba(0,255,136,0.4);
+    --bg:#050508; --surface:rgba(255,255,255,0.03); --border:rgba(255,255,255,0.07);
+    --cyan:#00f0ff; --purple:#b400ff; --pink:#ff0090; --green:#00ff88; --yellow:#ffcc00;
+    --text:#e0e8f0; --muted:rgba(255,255,255,0.35);
+    --glow-cyan:0 0 20px rgba(0,240,255,0.4); --glow-purple:0 0 20px rgba(180,0,255,0.4);
+    --glow-pink:0 0 20px rgba(255,0,144,0.4); --glow-green:0 0 20px rgba(0,255,136,0.4);
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 16px;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-  body::before {
-    content:''; position:fixed; inset:0;
-    background-image:
-      linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events:none; z-index:0;
-  }
-  body::after {
-    content:''; position:fixed; top:-50%; left:-50%; width:200%; height:200%;
-    background:
-      radial-gradient(ellipse at 20% 20%, rgba(180,0,255,0.06) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 80%, rgba(0,240,255,0.06) 0%, transparent 50%);
-    pointer-events:none; z-index:0;
-    animation: bgPulse 8s ease-in-out infinite alternate;
-  }
-  @keyframes bgPulse {
-    from { transform: rotate(0deg) scale(1); }
-    to   { transform: rotate(3deg) scale(1.05); }
-  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:16px;min-height:100vh;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,240,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,240,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+  body::after{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 20% 20%,rgba(180,0,255,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(0,240,255,0.06) 0%,transparent 50%);pointer-events:none;z-index:0;animation:bgPulse 8s ease-in-out infinite alternate;}
+  @keyframes bgPulse{from{transform:rotate(0deg) scale(1);}to{transform:rotate(3deg) scale(1.05);}}
 
-  .container {
-    position:relative; z-index:1;
-    max-width:1100px; margin:0 auto;
-    padding:32px 24px 60px;
-  }
+  .container{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:32px 24px 60px;}
 
   /* ── HEADER ── */
-  header {
-    display:flex; justify-content:space-between; align-items:center;
-    margin-bottom:40px; gap:20px; flex-wrap:wrap;
-  }
-  .header-left {
-    display:flex; align-items:center; gap:16px;
-  }
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;gap:20px;flex-wrap:wrap;}
+  .header-left{display:flex;align-items:center;gap:14px;}
+  .logo{display:flex;flex-direction:column;gap:4px;}
+  .logo h1{font-family:'Orbitron',monospace;font-size:clamp(18px,3.5vw,34px);font-weight:900;letter-spacing:6px;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+  .logo-sub{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:4px;opacity:.6;}
+  .header-right{display:flex;align-items:center;gap:14px;}
+  .header-date{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--muted);text-align:right;line-height:1.8;}
+  .pencil-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px 12px;cursor:pointer;font-size:16px;transition:all .2s;flex-shrink:0;}
+  .pencil-btn:hover{background:rgba(0,240,255,0.08);border-color:rgba(0,240,255,0.3);box-shadow:var(--glow-cyan);}
 
-  /* CAT */
-  .cat {
-    font-size:32px; line-height:1;
-    filter: drop-shadow(0 0 8px rgba(0,240,255,0.5));
-    animation: catFloat 3s ease-in-out infinite;
-    flex-shrink:0;
-    user-select:none;
-    cursor:default;
-  }
-  @keyframes catFloat {
-    0%,100% { transform: translateY(0px) rotate(-2deg); }
-    50%      { transform: translateY(-4px) rotate(2deg); }
-  }
-  .cat:hover { animation: catSpin .4s ease; }
-  @keyframes catSpin {
-    0%   { transform: scale(1); }
-    50%  { transform: scale(1.3) rotate(10deg); }
-    100% { transform: scale(1); }
-  }
-
-  .logo { display:flex; flex-direction:column; gap:4px; }
-  .logo h1 {
-    font-family:'Orbitron', monospace;
-    font-size: clamp(18px,3.5vw,34px); font-weight:900; letter-spacing:6px;
-    background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-    line-height:1;
-  }
-  .logo-sub {
-    font-family:'Share Tech Mono', monospace;
-    font-size:11px; color:var(--cyan); letter-spacing:4px; opacity:.6;
-  }
-  .header-right { display:flex; align-items:center; gap:14px; }
-  .header-date {
-    font-family:'Share Tech Mono', monospace;
-    font-size:12px; color:var(--muted); text-align:right; line-height:1.8;
-  }
-  .pencil-btn {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius:10px; padding:10px 12px;
-    cursor:pointer; font-size:16px;
-    transition: all .2s; flex-shrink:0;
-  }
-  .pencil-btn:hover {
-    background: rgba(0,240,255,0.08);
-    border-color: rgba(0,240,255,0.3);
-    box-shadow: var(--glow-cyan);
-  }
+  /* ── SVG CAT ── */
+  .cat-wrap{flex-shrink:0;cursor:default;animation:catFloat 3.5s ease-in-out infinite;}
+  .cat-wrap:hover{animation:catBounce .4s ease;}
+  @keyframes catFloat{0%,100%{transform:translateY(0) rotate(-1deg);}50%{transform:translateY(-5px) rotate(1deg);}}
+  @keyframes catBounce{0%{transform:scale(1);}40%{transform:scale(1.2) rotate(-8deg);}80%{transform:scale(0.95) rotate(4deg);}100%{transform:scale(1) rotate(0deg);}}
+  .cat-svg{filter:drop-shadow(0 0 6px rgba(0,240,255,0.55)) drop-shadow(0 0 14px rgba(180,0,255,0.3));}
 
   /* ── MODAL ── */
-  .modal-overlay {
-    display:none; position:fixed; inset:0;
-    background: rgba(0,0,0,0.75); backdrop-filter:blur(6px);
-    z-index:100; align-items:center; justify-content:center;
-  }
-  .modal-overlay.open { display:flex; }
-  .modal {
-    background: #0c0c14;
-    border: 1px solid rgba(0,240,255,0.2);
-    box-shadow: 0 0 40px rgba(0,240,255,0.15);
-    border-radius:20px; padding:32px;
-    width:100%; max-width:440px; margin:16px;
-    position:relative; animation: fadeIn .25s ease;
-  }
-  .modal-title {
-    font-family:'Orbitron', monospace; font-size:14px; letter-spacing:3px;
-    color:var(--cyan); margin-bottom:24px; text-transform:uppercase;
-  }
-  .modal-close {
-    position:absolute; top:20px; right:20px;
-    background:none; border:none; color:var(--muted);
-    font-size:20px; cursor:pointer; transition:color .2s;
-  }
-  .modal-close:hover { color:var(--text); }
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:100;align-items:center;justify-content:center;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:#0c0c14;border:1px solid rgba(0,240,255,0.2);box-shadow:0 0 40px rgba(0,240,255,0.15);border-radius:20px;padding:32px;width:100%;max-width:440px;margin:16px;position:relative;animation:fadeIn .25s ease;}
+  .modal-title{font-family:'Orbitron',monospace;font-size:14px;letter-spacing:3px;color:var(--cyan);margin-bottom:24px;text-transform:uppercase;}
+  .modal-close{position:absolute;top:20px;right:20px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;transition:color .2s;}
+  .modal-close:hover{color:var(--text);}
+  .field-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+  label{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+  input[type="number"],input[type="date"],input[type="text"]{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:10px 14px;color:var(--text);font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:600;outline:none;transition:border-color .2s,box-shadow .2s;width:100%;}
+  input:focus{border-color:var(--cyan);box-shadow:0 0 12px rgba(0,240,255,0.2);}
+  input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(1) opacity(.4);}
+  .btn{width:100%;padding:12px;border-radius:10px;border:none;cursor:pointer;font-family:'Orbitron',monospace;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;transition:all .2s;}
+  .btn-primary{background:linear-gradient(135deg,var(--cyan),var(--purple));color:#000;box-shadow:0 4px 20px rgba(0,240,255,0.3);}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(0,240,255,0.5);}
 
-  /* ── INPUTS ── */
-  .field-group { display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
-  label {
-    font-family:'Share Tech Mono', monospace;
-    font-size:10px; letter-spacing:2px; color:var(--muted); text-transform:uppercase;
-  }
-  input[type="number"], input[type="date"], input[type="text"] {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius:10px; padding:10px 14px;
-    color:var(--text); font-family:'Rajdhani', sans-serif;
-    font-size:16px; font-weight:600; outline:none;
-    transition: border-color .2s, box-shadow .2s; width:100%;
-  }
-  input:focus { border-color:var(--cyan); box-shadow: 0 0 12px rgba(0,240,255,0.2); }
-  input[type="date"]::-webkit-calendar-picker-indicator { filter:invert(1) opacity(.4); }
-  .btn {
-    width:100%; padding:12px; border-radius:10px; border:none;
-    cursor:pointer; font-family:'Orbitron', monospace;
-    font-size:12px; font-weight:700; letter-spacing:3px;
-    text-transform:uppercase; transition:all .2s;
-  }
-  .btn-primary {
-    background: linear-gradient(135deg, var(--cyan), var(--purple));
-    color:#000; box-shadow: 0 4px 20px rgba(0,240,255,0.3);
-  }
-  .btn-primary:hover { transform:translateY(-1px); box-shadow: 0 6px 28px rgba(0,240,255,0.5); }
-
-  /* ── STATS ── */
-  .stats-grid {
-    display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
-    gap:16px; margin-bottom:24px;
-  }
-  .card {
-    background:var(--surface); border:1px solid var(--border);
-    border-radius:16px; padding:20px 22px;
-    position:relative; overflow:hidden;
-    transition:transform .2s; backdrop-filter:blur(10px);
-  }
-  .card:hover { transform:translateY(-2px); }
-  .card::before {
-    content:''; position:absolute; inset:0; border-radius:16px; padding:1px;
-    background: linear-gradient(135deg, var(--accent, var(--cyan)), transparent 60%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite:xor; mask-composite:exclude; opacity:.4;
-  }
-  .card.cyan   { --accent:var(--cyan); }
-  .card.purple { --accent:var(--purple); }
-  .card.pink   { --accent:var(--pink); }
-  .card.green  { --accent:var(--green); }
-  .card-label {
-    font-size:11px; letter-spacing:3px; text-transform:uppercase;
-    color:var(--muted); margin-bottom:10px; font-family:'Share Tech Mono', monospace;
-  }
-  .card-value {
-    font-family:'Orbitron', monospace;
-    font-size:clamp(28px,5vw,40px); font-weight:700; line-height:1; margin-bottom:6px;
-  }
-  .card.cyan   .card-value { color:var(--cyan);   text-shadow:var(--glow-cyan); }
-  .card.purple .card-value { color:var(--purple); text-shadow:var(--glow-purple); }
-  .card.pink   .card-value { color:var(--pink);   text-shadow:var(--glow-pink); }
-  .card.green  .card-value { color:var(--green);  text-shadow:var(--glow-green); }
-  .card-sub { font-size:13px; color:var(--muted); font-weight:300; }
+  /* ── STAT CARDS ── */
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 22px;position:relative;overflow:hidden;transition:transform .2s;backdrop-filter:blur(10px);}
+  .card:hover{transform:translateY(-2px);}
+  .card::before{content:'';position:absolute;inset:0;border-radius:16px;padding:1px;background:linear-gradient(135deg,var(--accent,var(--cyan)),transparent 60%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.4;}
+  .card.cyan{--accent:var(--cyan);} .card.purple{--accent:var(--purple);} .card.pink{--accent:var(--pink);} .card.green{--accent:var(--green);}
+  .card-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-family:'Share Tech Mono',monospace;}
+  .card-value{font-family:'Orbitron',monospace;font-size:clamp(28px,5vw,40px);font-weight:700;line-height:1;margin-bottom:6px;}
+  .card.cyan .card-value{color:var(--cyan);text-shadow:var(--glow-cyan);} .card.purple .card-value{color:var(--purple);text-shadow:var(--glow-purple);}
+  .card.pink .card-value{color:var(--pink);text-shadow:var(--glow-pink);} .card.green .card-value{color:var(--green);text-shadow:var(--glow-green);}
+  .card-sub{font-size:13px;color:var(--muted);font-weight:300;}
 
   /* ── PROGRESS ── */
-  .progress-section {
-    background:var(--surface); border:1px solid var(--border);
-    border-radius:16px; padding:24px; margin-bottom:24px; backdrop-filter:blur(10px);
-  }
-  .progress-header {
-    display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;
-  }
-  .progress-title {
-    font-family:'Share Tech Mono', monospace;
-    font-size:11px; letter-spacing:3px; color:var(--muted); text-transform:uppercase;
-  }
-  .progress-pct {
-    font-family:'Orbitron', monospace;
-    font-size:22px; font-weight:700; color:var(--cyan); text-shadow:var(--glow-cyan);
-  }
-  .progress-track {
-    height:10px; background:rgba(255,255,255,0.06);
-    border-radius:99px; overflow:visible; position:relative;
-  }
-  .progress-fill {
-    height:100%; border-radius:99px;
-    background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
-    box-shadow: 0 0 16px rgba(0,240,255,0.5), 0 0 32px rgba(180,0,255,0.3);
-    transition: width .8s cubic-bezier(0.34,1.56,0.64,1);
-    position:relative;
-  }
-  .progress-fill::after {
-    content:''; position:absolute; right:-1px; top:50%; transform:translateY(-50%);
-    width:16px; height:16px; border-radius:50%; background:white;
-    box-shadow: 0 0 12px var(--cyan), 0 0 24px var(--purple);
-  }
+  .progress-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:24px;backdrop-filter:blur(10px);}
+  .progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+  .progress-title{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+  .progress-pct{font-family:'Orbitron',monospace;font-size:22px;font-weight:700;color:var(--cyan);text-shadow:var(--glow-cyan);}
+  .progress-track{height:10px;background:rgba(255,255,255,0.06);border-radius:99px;overflow:visible;position:relative;}
+  .progress-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));box-shadow:0 0 16px rgba(0,240,255,0.5),0 0 32px rgba(180,0,255,0.3);transition:width .8s cubic-bezier(0.34,1.56,0.64,1);position:relative;}
+  .progress-fill::after{content:'';position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:16px;height:16px;border-radius:50%;background:white;box-shadow:0 0 12px var(--cyan),0 0 24px var(--purple);}
+
+  /* ── CALENDAR ── */
+  .calendar-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:24px;backdrop-filter:blur(10px);}
+  .section-title{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:16px;}
+  .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+  .cal-nav-btn{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:6px 14px;color:var(--muted);font-size:18px;cursor:pointer;transition:all .2s;line-height:1;}
+  .cal-nav-btn:hover{color:var(--cyan);border-color:rgba(0,240,255,0.3);background:rgba(0,240,255,0.07);}
+  .cal-month-title{font-family:'Orbitron',monospace;font-size:13px;letter-spacing:3px;color:var(--text);text-transform:uppercase;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+  .cal-head{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-align:center;padding:4px 0;text-transform:uppercase;}
+  .cal-head.weekend{color:rgba(255,0,144,0.5);}
+  .cal-cell{position:relative;aspect-ratio:1;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:default;transition:all .2s;border:1px solid transparent;}
+  .cal-cell.empty{background:transparent;border:none;}
+  .cal-cell.has-data{cursor:pointer;}
+  .cal-cell:not(.empty){background:rgba(255,255,255,0.02);}
+  .cal-cell.today{border-color:rgba(0,240,255,0.4);background:rgba(0,240,255,0.06)!important;}
+  .cal-cell.weekend:not(.empty){background:rgba(255,0,144,0.03);}
+  .cal-cell.holiday:not(.empty){background:rgba(255,0,144,0.05);}
+  .cal-cell.has-data{background:rgba(0,240,255,calc(0.04 + var(--intensity,0)*0.18))!important;border-color:rgba(0,240,255,calc(0.1 + var(--intensity,0)*0.4));}
+  .cal-day-num{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);line-height:1;}
+  .cal-cell.today .cal-day-num{color:var(--cyan);}
+  .cal-cell.weekend .cal-day-num{color:rgba(255,0,144,0.5);}
+  .cal-cell.has-data .cal-day-num{color:var(--text);}
+  .cal-dot{width:5px;height:5px;border-radius:50%;background:var(--cyan);margin-top:2px;box-shadow:0 0 5px var(--cyan);}
+
+  /* Tooltip */
+  .cal-tooltip{position:fixed;background:rgba(8,8,20,0.97);border:1px solid var(--cyan);box-shadow:var(--glow-cyan);border-radius:10px;padding:8px 14px;font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--cyan);pointer-events:none;opacity:0;transition:opacity .15s;z-index:200;white-space:nowrap;}
+  .cal-tooltip.visible{opacity:1;}
 
   /* ── CHART ── */
-  .chart-section {
-    background:var(--surface); border:1px solid var(--border);
-    border-radius:16px; padding:24px; margin-bottom:24px; backdrop-filter:blur(10px);
-  }
-  .section-title {
-    font-family:'Share Tech Mono', monospace;
-    font-size:11px; letter-spacing:3px; color:var(--muted);
-    text-transform:uppercase; margin-bottom:20px;
-  }
-  #chartCanvas { width:100%; display:block; }
+  .chart-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:24px;backdrop-filter:blur(10px);}
+  #chartCanvas{width:100%;display:block;}
 
   /* ── HISTORY ── */
-  .history-section {
-    background:var(--surface); border:1px solid var(--border);
-    border-radius:16px; padding:24px; backdrop-filter:blur(10px);
-  }
-  .history-header {
-    display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;
-  }
-  .week-label {
-    font-family:'Share Tech Mono', monospace;
-    font-size:10px; letter-spacing:2px; color:var(--purple);
-    text-transform:uppercase; padding:4px 0 16px;
-    border-bottom: 1px solid rgba(180,0,255,0.15);
-    margin-bottom:4px;
-  }
+  .history-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;backdrop-filter:blur(10px);}
+  .history-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+
+  /* Past toggle */
+  .past-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,0.02);transition:all .2s;margin-bottom:4px;width:100%;}
+  .past-toggle:hover{color:var(--purple);border-color:rgba(180,0,255,0.3);background:rgba(180,0,255,0.05);}
+  .past-toggle .arrow{transition:transform .25s;}
+  .past-toggle.open .arrow{transform:rotate(180deg);}
+  .past-list{overflow:hidden;max-height:0;transition:max-height .4s cubic-bezier(0.4,0,0.2,1);}
+  .past-list.open{max-height:600px;}
+
+  /* Week divider */
+  .week-divider{display:flex;align-items:center;gap:10px;padding:10px 0 4px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(180,0,255,0.45);text-transform:uppercase;}
+  .week-divider::before,.week-divider::after{content:'';flex:1;height:1px;background:rgba(180,0,255,0.12);}
 
   /* Row */
-  .history-item {
-    display:flex; align-items:center;
-    padding:8px 0; border-bottom:1px solid var(--border); gap:12px;
-  }
-  .history-item:last-child { border-bottom:none; }
-  .history-item.is-today .history-date { color: var(--cyan); }
-  .history-item.is-future { opacity:.55; }
-  .history-item.is-weekend .history-date { color: var(--pink); opacity:.7; }
-
-  .history-date {
-    font-family:'Share Tech Mono', monospace;
-    font-size:12px; color:var(--muted); flex-shrink:0; min-width:110px;
-  }
-  .history-bar { flex:1; height:4px; background:rgba(255,255,255,0.06); border-radius:99px; overflow:hidden; }
-  .history-bar-fill {
-    height:100%; border-radius:99px;
-    background: linear-gradient(90deg, var(--cyan), var(--purple));
-    transition:width .5s ease;
-  }
-
-  /* Quick number input */
-  .quick-input {
-    width:72px !important; flex-shrink:0;
-    padding:5px 8px !important; font-size:15px !important;
-    text-align:center; border-radius:8px !important;
-    color:var(--cyan) !important;
-    font-family:'Orbitron', monospace !important;
-    font-weight:700 !important;
-    -moz-appearance:textfield;
-  }
-  .quick-input::-webkit-outer-spin-button,
-  .quick-input::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
-  .quick-input:focus { border-color:var(--cyan) !important; }
-  .quick-input.has-value {
-    background: rgba(0,240,255,0.05) !important;
-    border-color: rgba(0,240,255,0.25) !important;
-  }
-
-  .del-btn {
-    background:none; border:none; color:rgba(255,60,60,0.3);
-    cursor:pointer; font-size:13px; padding:4px 6px; border-radius:6px;
-    transition:all .2s; flex-shrink:0; opacity:0;
-  }
-  .history-item:hover .del-btn { opacity:1; }
-  .del-btn:hover { color:#ff4444; background:rgba(255,0,0,0.1); }
-
-  /* Divider between weeks */
-  .week-divider {
-    display:flex; align-items:center; gap:10px;
-    padding:10px 0 6px;
-    font-family:'Share Tech Mono', monospace;
-    font-size:10px; letter-spacing:2px; color:rgba(180,0,255,0.5);
-    text-transform:uppercase;
-  }
-  .week-divider::before, .week-divider::after {
-    content:''; flex:1; height:1px;
-    background: rgba(180,0,255,0.15);
-  }
+  .history-item{display:flex;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;}
+  .history-item:last-child{border-bottom:none;}
+  .history-item.is-today .h-date{color:var(--cyan);}
+  .history-item.is-future{opacity:.5;}
+  .history-item.is-weekend .h-date{color:rgba(255,0,144,0.6);}
+  .h-date{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--muted);flex-shrink:0;min-width:115px;}
+  .h-bar{flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:99px;overflow:hidden;}
+  .h-bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--purple));transition:width .5s ease;}
+  .quick-input{width:72px!important;flex-shrink:0;padding:5px 8px!important;font-size:15px!important;text-align:center;border-radius:8px!important;color:var(--cyan)!important;font-family:'Orbitron',monospace!important;font-weight:700!important;-moz-appearance:textfield;}
+  .quick-input::-webkit-outer-spin-button,.quick-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+  .quick-input.has-value{background:rgba(0,240,255,0.05)!important;border-color:rgba(0,240,255,0.25)!important;}
+  .del-btn{background:none;border:none;color:rgba(255,60,60,0.3);cursor:pointer;font-size:12px;padding:4px 6px;border-radius:6px;transition:all .2s;flex-shrink:0;opacity:0;}
+  .history-item:hover .del-btn{opacity:1;}
+  .del-btn:hover{color:#ff4444;background:rgba(255,0,0,0.1);}
 
   /* ── TOAST ── */
-  .toast {
-    position:fixed; bottom:30px; right:30px;
-    background:rgba(10,10,20,0.95);
-    border:1px solid var(--cyan); box-shadow:var(--glow-cyan);
-    border-radius:12px; padding:14px 20px;
-    font-family:'Share Tech Mono', monospace; font-size:13px; color:var(--cyan);
-    transform:translateY(80px); opacity:0;
-    transition:all .4s cubic-bezier(0.34,1.56,0.64,1); z-index:1000;
-  }
-  .toast.show { transform:translateY(0); opacity:1; }
+  .toast{position:fixed;bottom:30px;right:30px;background:rgba(10,10,20,0.95);border:1px solid var(--cyan);box-shadow:var(--glow-cyan);border-radius:12px;padding:14px 20px;font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--cyan);transform:translateY(80px);opacity:0;transition:all .4s cubic-bezier(0.34,1.56,0.64,1);z-index:1000;}
+  .toast.show{transform:translateY(0);opacity:1;}
 
-  @keyframes fadeIn {
-    from { opacity:0; transform:translateY(10px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
-  .card, .progress-section, .chart-section, .history-section { animation: fadeIn .5s ease forwards; }
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .card,.progress-section,.calendar-section,.chart-section,.history-section{animation:fadeIn .5s ease forwards;}
 </style>
 </head>
 <body>
@@ -353,7 +154,54 @@
   <!-- HEADER -->
   <header>
     <div class="header-left">
-      <div class="cat" title="мяу">🐱</div>
+      <!-- DRAWN CAT -->
+      <div class="cat-wrap" title="мяу!">
+        <svg class="cat-svg" width="56" height="54" viewBox="0 0 56 54" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="eyeGlow" cx="50%" cy="40%" r="50%">
+              <stop offset="0%" stop-color="#00f0ff"/>
+              <stop offset="100%" stop-color="#0088aa"/>
+            </radialGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="1.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <!-- ears -->
+          <polygon points="9,26 3,6 21,18" fill="#060612" stroke="#00f0ff" stroke-width="1.4" stroke-linejoin="round"/>
+          <polygon points="47,26 53,6 35,18" fill="#060612" stroke="#00f0ff" stroke-width="1.4" stroke-linejoin="round"/>
+          <!-- inner ear -->
+          <polygon points="10,24 5,10 19,18" fill="#b400ff" opacity="0.28"/>
+          <polygon points="46,24 51,10 37,18" fill="#b400ff" opacity="0.28"/>
+          <!-- head -->
+          <circle cx="28" cy="32" r="20" fill="#060612" stroke="#00f0ff" stroke-width="1.4"/>
+          <!-- blush -->
+          <ellipse cx="15" cy="38" rx="5" ry="3" fill="#ff0090" opacity="0.18"/>
+          <ellipse cx="41" cy="38" rx="5" ry="3" fill="#ff0090" opacity="0.18"/>
+          <!-- eyes -->
+          <ellipse cx="20" cy="29" rx="4.5" ry="5" fill="url(#eyeGlow)" filter="url(#glow)"/>
+          <ellipse cx="36" cy="29" rx="4.5" ry="5" fill="url(#eyeGlow)" filter="url(#glow)"/>
+          <!-- pupils -->
+          <ellipse cx="20" cy="29" rx="2" ry="3" fill="#020208"/>
+          <ellipse cx="36" cy="29" rx="2" ry="3" fill="#020208"/>
+          <!-- eye shine -->
+          <circle cx="21.5" cy="27" r="1.1" fill="white" opacity="0.9"/>
+          <circle cx="37.5" cy="27" r="1.1" fill="white" opacity="0.9"/>
+          <!-- nose -->
+          <polygon points="28,36 25.5,38.5 30.5,38.5" fill="#ff0090" filter="url(#glow)"/>
+          <!-- mouth -->
+          <path d="M25.5,38.5 Q22,41.5 19,40" stroke="#ff0090" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+          <path d="M30.5,38.5 Q34,41.5 37,40" stroke="#ff0090" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+          <!-- whiskers left -->
+          <line x1="1" y1="35" x2="17" y2="36.5" stroke="#00f0ff" stroke-width="0.8" opacity="0.45"/>
+          <line x1="1" y1="39" x2="17" y2="38.5" stroke="#00f0ff" stroke-width="0.8" opacity="0.45"/>
+          <!-- whiskers right -->
+          <line x1="39" y1="36.5" x2="55" y2="35" stroke="#00f0ff" stroke-width="0.8" opacity="0.45"/>
+          <line x1="39" y1="38.5" x2="55" y2="39" stroke="#00f0ff" stroke-width="0.8" opacity="0.45"/>
+          <!-- tiny forehead mark -->
+          <path d="M25,18 Q28,14 31,18" stroke="#00f0ff" stroke-width="0.8" fill="none" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+      </div>
       <div class="logo">
         <h1 id="goalTitle">LEADS TRACKER</h1>
         <div class="logo-sub">PERFORMANCE DASHBOARD</div>
@@ -364,7 +212,7 @@
         <div id="currentDate"></div>
         <div id="daysLeftEl" style="color:var(--cyan);font-size:13px;margin-top:4px;"></div>
       </div>
-      <button class="pencil-btn" onclick="openSettings()" title="Настройки цели">✏️</button>
+      <button class="pencil-btn" onclick="openSettings()" title="Настройки">✏️</button>
     </div>
   </header>
 
@@ -403,6 +251,17 @@
     </div>
   </div>
 
+  <!-- CALENDAR -->
+  <div class="calendar-section">
+    <div class="section-title">📅 календарь лидов</div>
+    <div class="cal-nav">
+      <button class="cal-nav-btn" onclick="calShift(-1)">‹</button>
+      <div class="cal-month-title" id="calTitle"></div>
+      <button class="cal-nav-btn" onclick="calShift(1)">›</button>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+  </div>
+
   <!-- CHART -->
   <div class="chart-section">
     <div class="section-title">📊 динамика по дням</div>
@@ -414,10 +273,22 @@
     <div class="history-header">
       <div class="section-title" style="margin-bottom:0">🗂 история</div>
     </div>
-    <div id="historyList"></div>
+    <!-- Past (collapsed) -->
+    <button class="past-toggle" id="pastToggle" onclick="togglePast()">
+      <span class="arrow">▲</span>
+      <span id="pastLabel">предыдущие дни</span>
+      <span style="margin-left:auto;font-size:9px;opacity:.6;">НАЖМИ ЧТОБЫ РАСКРЫТЬ</span>
+    </button>
+    <div class="past-list" id="pastList"></div>
+    <!-- Divider -->
+    <div style="height:6px"></div>
+    <!-- Current + future -->
+    <div id="futureList"></div>
   </div>
-
 </div>
+
+<!-- TOOLTIP -->
+<div class="cal-tooltip" id="calTooltip"></div>
 
 <!-- SETTINGS MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeOnBg(event)">
@@ -426,15 +297,15 @@
     <div class="modal-title">✏️ Настройки цели</div>
     <div class="field-group">
       <label>Название цели</label>
-      <input type="text" id="s_goalName" placeholder="Лиды Q2" />
+      <input type="text" id="s_goalName" placeholder="Лиды Q2"/>
     </div>
     <div class="field-group">
       <label>Цель (кол-во лидов)</label>
-      <input type="number" id="s_goalTotal" placeholder="1000" min="1" />
+      <input type="number" id="s_goalTotal" placeholder="1000" min="1"/>
     </div>
     <div class="field-group">
       <label>Дедлайн</label>
-      <input type="date" id="s_deadline" />
+      <input type="date" id="s_deadline"/>
     </div>
     <button class="btn btn-primary" onclick="saveSettings()">СОХРАНИТЬ</button>
   </div>
@@ -443,360 +314,243 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ── HOLIDAYS (MM-DD) ──────────────────────────────────────────────────────────
-const RU_HOLIDAYS = new Set([
-  '01-01','01-02','01-03','01-04','01-05','01-06','01-07','01-08',
-  '02-23','03-08','05-01','05-09','06-12','11-04'
-]);
-function isWorkDay(date) {
-  const d   = new Date(date);
-  const day = d.getDay();
-  if (day === 0 || day === 6) return false;
-  const mm = String(d.getMonth()+1).padStart(2,'0');
-  const dd = String(d.getDate()).padStart(2,'0');
-  return !RU_HOLIDAYS.has(`${mm}-${dd}`);
-}
-function countWorkDays(from, to) {
-  let n = 0;
-  const c = new Date(from); c.setHours(0,0,0,0);
-  const e = new Date(to);   e.setHours(0,0,0,0);
-  while (c <= e) { if (isWorkDay(c)) n++; c.setDate(c.getDate()+1); }
-  return n;
-}
+// ── HOLIDAYS ─────────────────────────────────────────────────────────────────
+const RU_HOLIDAYS=new Set(['01-01','01-02','01-03','01-04','01-05','01-06','01-07','01-08','02-23','03-08','05-01','05-09','06-12','11-04']);
+function isWorkDay(d){const dt=new Date(d);const day=dt.getDay();if(day===0||day===6)return false;const mm=String(dt.getMonth()+1).padStart(2,'0'),dd=String(dt.getDate()).padStart(2,'0');return!RU_HOLIDAYS.has(`${mm}-${dd}`);}
+function countWorkDays(from,to){let n=0;const c=new Date(from);c.setHours(0,0,0,0);const e=new Date(to);e.setHours(0,0,0,0);while(c<=e){if(isWorkDay(c))n++;c.setDate(c.getDate()+1);}return n;}
 
-// ── Week helpers (Thu→Thu) ────────────────────────────────────────────────────
-// Returns the Thursday that starts the week containing `date`
-function getWeekStart(date) {
-  const d   = new Date(date); d.setHours(0,0,0,0);
-  const day = d.getDay(); // 0=Sun,1=Mon,...,4=Thu
-  const diff = (day - 4 + 7) % 7; // days since last Thursday
-  d.setDate(d.getDate() - diff);
-  return d;
-}
-// Count remaining full weeks (Thu→Thu boundaries) from today to deadline
-function getRemainingWeeks() {
-  if (!state.deadline) return null;
-  const today = new Date(); today.setHours(0,0,0,0);
-  const dl    = new Date(state.deadline); dl.setHours(0,0,0,0);
-  if (dl <= today) return 0;
-  // Find next Thursday after today
-  const todayDay = today.getDay();
-  const daysToNextThu = todayDay === 4 ? 7 : (4 - todayDay + 7) % 7;
-  let nextThu = new Date(today);
-  nextThu.setDate(nextThu.getDate() + daysToNextThu);
-  let weeks = 0;
-  const cur = new Date(nextThu);
-  while (cur <= dl) { weeks++; cur.setDate(cur.getDate()+7); }
-  return weeks;
-}
+// ── WEEKS (Thu→Thu) ──────────────────────────────────────────────────────────
+function getWeekStart(dateStr){const d=new Date(dateStr);d.setHours(0,0,0,0);const diff=(d.getDay()-4+7)%7;d.setDate(d.getDate()-diff);return d;}
+function getRemainingWeeks(){if(!state.deadline)return null;const today=new Date();today.setHours(0,0,0,0);const dl=new Date(state.deadline);dl.setHours(0,0,0,0);if(dl<=today)return 0;const todayDay=today.getDay();const dtn=todayDay===4?7:(4-todayDay+7)%7;const next=new Date(today);next.setDate(next.getDate()+dtn);let w=0;const cur=new Date(next);while(cur<=dl){w++;cur.setDate(cur.getDate()+7);}return w;}
 
-// ── STATE ─────────────────────────────────────────────────────────────────────
-let state = { goalName:'', goalTotal:0, deadline:'', entries:{} };
-const todayStr = () => new Date().toISOString().slice(0,10);
-const save     = () => localStorage.setItem('leads_v4', JSON.stringify(state));
+// ── STATE ────────────────────────────────────────────────────────────────────
+let state={goalName:'',goalTotal:0,deadline:'',entries:{}};
+const todayStr=()=>new Date().toISOString().slice(0,10);
+const save=()=>localStorage.setItem('leads_v4',JSON.stringify(state));
 
-function init() {
-  const saved = localStorage.getItem('leads_v4');
-  // migrate from old key
-  if (!saved) {
-    const old = localStorage.getItem('leads_v3');
-    if (old) { state = JSON.parse(old); save(); }
-  } else {
-    state = JSON.parse(saved);
-  }
+function init(){
+  const s=localStorage.getItem('leads_v4');
+  if(s)state=JSON.parse(s);
+  else{const old=localStorage.getItem('leads_v3');if(old){state=JSON.parse(old);save();}}
   updateCurrentDate();
-  render();
+  calYear=new Date().getFullYear();calMonth=new Date().getMonth();
+  renderCalendar();render();
 }
 
-// ── SETTINGS ──────────────────────────────────────────────────────────────────
-function openSettings() {
-  document.getElementById('s_goalName').value  = state.goalName  || '';
-  document.getElementById('s_goalTotal').value = state.goalTotal || '';
-  document.getElementById('s_deadline').value  = state.deadline  || '';
-  document.getElementById('modalOverlay').classList.add('open');
-}
-function closeSettings() { document.getElementById('modalOverlay').classList.remove('open'); }
-function closeOnBg(e)    { if (e.target.id==='modalOverlay') closeSettings(); }
-function saveSettings() {
-  state.goalName  = document.getElementById('s_goalName').value.trim() || 'LEADS TRACKER';
-  state.goalTotal = parseInt(document.getElementById('s_goalTotal').value) || 0;
-  state.deadline  = document.getElementById('s_deadline').value;
-  save(); closeSettings(); render();
-  showToast('Настройки сохранены ✓');
-}
+// ── SETTINGS ─────────────────────────────────────────────────────────────────
+function openSettings(){document.getElementById('s_goalName').value=state.goalName||'';document.getElementById('s_goalTotal').value=state.goalTotal||'';document.getElementById('s_deadline').value=state.deadline||'';document.getElementById('modalOverlay').classList.add('open');}
+function closeSettings(){document.getElementById('modalOverlay').classList.remove('open');}
+function closeOnBg(e){if(e.target.id==='modalOverlay')closeSettings();}
+function saveSettings(){state.goalName=document.getElementById('s_goalName').value.trim()||'LEADS TRACKER';state.goalTotal=parseInt(document.getElementById('s_goalTotal').value)||0;state.deadline=document.getElementById('s_deadline').value;save();closeSettings();render();renderCalendar();showToast('Настройки сохранены ✓');}
 
-// ── CALC ──────────────────────────────────────────────────────────────────────
-function getTotalLeads() { return Object.values(state.entries).reduce((a,b)=>a+b,0); }
-function getWorkDaysLeft() {
-  if (!state.deadline) return null;
-  const today = new Date(); today.setHours(0,0,0,0);
-  const dl    = new Date(state.deadline); dl.setHours(0,0,0,0);
-  if (dl <= today) return 0;
-  const tom = new Date(today); tom.setDate(tom.getDate()+1);
-  return countWorkDays(tom, dl);
-}
-function getCalDaysLeft() {
-  if (!state.deadline) return null;
-  const today = new Date(); today.setHours(0,0,0,0);
-  const dl    = new Date(state.deadline); dl.setHours(0,0,0,0);
-  return Math.max(0, Math.ceil((dl-today)/86400000));
-}
-function getDailyNorm() {
-  const rem = (state.goalTotal||0) - getTotalLeads();
-  const wdl = getWorkDaysLeft();
-  if (!wdl || rem <= 0) return 0;
-  return Math.ceil(rem / wdl);
-}
-function getWeeklyNorm() {
-  const rem   = (state.goalTotal||0) - getTotalLeads();
-  const weeks = getRemainingWeeks();
-  if (!weeks || rem <= 0) return 0;
-  return Math.ceil(rem / weeks);
-}
+// ── CALC ─────────────────────────────────────────────────────────────────────
+function getTotalLeads(){return Object.values(state.entries).reduce((a,b)=>a+b,0);}
+function getWorkDaysLeft(){if(!state.deadline)return null;const today=new Date();today.setHours(0,0,0,0);const dl=new Date(state.deadline);dl.setHours(0,0,0,0);if(dl<=today)return 0;const tom=new Date(today);tom.setDate(tom.getDate()+1);return countWorkDays(tom,dl);}
+function getCalDaysLeft(){if(!state.deadline)return null;const today=new Date();today.setHours(0,0,0,0);const dl=new Date(state.deadline);dl.setHours(0,0,0,0);return Math.max(0,Math.ceil((dl-today)/86400000));}
+function getDailyNorm(){const rem=(state.goalTotal||0)-getTotalLeads();const wdl=getWorkDaysLeft();if(!wdl||rem<=0)return 0;return Math.ceil(rem/wdl);}
+function getWeeklyNorm(){const rem=(state.goalTotal||0)-getTotalLeads();const w=getRemainingWeeks();if(!w||rem<=0)return 0;return Math.ceil(rem/w);}
 
-// ── RENDER ────────────────────────────────────────────────────────────────────
-function render() {
-  const total  = getTotalLeads();
-  const goal   = state.goalTotal || 0;
-  const rem    = Math.max(0, goal - total);
-  const wdl    = getWorkDaysLeft();
-  const cal    = getCalDaysLeft();
-  const norm   = getDailyNorm();
-  const wnorm  = getWeeklyNorm();
-  const weeks  = getRemainingWeeks();
-  const pct    = goal > 0 ? Math.min(100, Math.round(total/goal*100)) : 0;
-
-  document.getElementById('goalTitle').textContent    = (state.goalName||'LEADS TRACKER').toUpperCase();
-  document.getElementById('daysLeftEl').textContent   = cal !== null ? `⏳ ${cal} дней до дедлайна` : '';
-  document.getElementById('totalLeads').textContent   = total.toLocaleString();
-  document.getElementById('goalDisplay').textContent  = goal ? goal.toLocaleString() : '—';
-  document.getElementById('remaining').textContent    = goal ? rem.toLocaleString() : '—';
-  document.getElementById('dailyNorm').textContent    = norm || '—';
-  document.getElementById('workDaysLeft').textContent = wdl !== null ? wdl : '—';
-  document.getElementById('weeklyNorm').textContent   = wnorm || '—';
-  document.getElementById('weeksLeft').textContent    = weeks !== null ? weeks : '—';
-  document.getElementById('progressPct').textContent  = pct+'%';
-  document.getElementById('progressFill').style.width = pct+'%';
-
+// ── RENDER STATS ─────────────────────────────────────────────────────────────
+function render(){
+  const total=getTotalLeads(),goal=state.goalTotal||0,rem=Math.max(0,goal-total);
+  const wdl=getWorkDaysLeft(),cal=getCalDaysLeft(),norm=getDailyNorm(),wnorm=getWeeklyNorm(),weeks=getRemainingWeeks();
+  const pct=goal>0?Math.min(100,Math.round(total/goal*100)):0;
+  document.getElementById('goalTitle').textContent=(state.goalName||'LEADS TRACKER').toUpperCase();
+  document.getElementById('daysLeftEl').textContent=cal!==null?`⏳ ${cal} дней до дедлайна`:'';
+  document.getElementById('totalLeads').textContent=total.toLocaleString();
+  document.getElementById('goalDisplay').textContent=goal?goal.toLocaleString():'—';
+  document.getElementById('remaining').textContent=goal?rem.toLocaleString():'—';
+  document.getElementById('dailyNorm').textContent=norm||'—';
+  document.getElementById('workDaysLeft').textContent=wdl!==null?wdl:'—';
+  document.getElementById('weeklyNorm').textContent=wnorm||'—';
+  document.getElementById('weeksLeft').textContent=weeks!==null?weeks:'—';
+  document.getElementById('progressPct').textContent=pct+'%';
+  document.getElementById('progressFill').style.width=pct+'%';
   renderHistory();
   renderChart();
 }
 
+// ── CALENDAR ─────────────────────────────────────────────────────────────────
+let calYear,calMonth;
+function calShift(d){calMonth+=d;if(calMonth>11){calMonth=0;calYear++;}if(calMonth<0){calMonth=11;calYear--;}renderCalendar();}
+function renderCalendar(){
+  const firstDay=new Date(calYear,calMonth,1).getDay();
+  const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  const title=new Date(calYear,calMonth,1).toLocaleDateString('ru-RU',{month:'long',year:'numeric'});
+  document.getElementById('calTitle').textContent=title.toUpperCase();
+  const today=todayStr();
+  const maxCount=Math.max(...Object.values(state.entries),1);
+  const heads=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+  let html=heads.map((h,i)=>`<div class="cal-head${i>=5?' weekend':''}">${h}</div>`).join('');
+  const offset=(firstDay+6)%7;
+  for(let i=0;i<offset;i++) html+=`<div class="cal-cell empty"></div>`;
+  for(let day=1;day<=daysInMonth;day++){
+    const mm=String(calMonth+1).padStart(2,'0'),dd=String(day).padStart(2,'0');
+    const dateStr=`${calYear}-${mm}-${dd}`;
+    const count=state.entries[dateStr]||0;
+    const isToday=dateStr===today;
+    const dt=new Date(dateStr+'T00:00:00');
+    const wd=isWorkDay(dt);
+    const isWknd=dt.getDay()===0||dt.getDay()===6;
+    const intensity=count>0?Math.min(1,count/maxCount):0;
+    let cls='cal-cell';
+    if(isToday) cls+=' today';
+    if(isWknd) cls+=' weekend';
+    if(!wd&&!isWknd) cls+=' holiday';
+    if(count>0) cls+=' has-data';
+    const tip=count>0?`${day} — ${count} лидов`:`${day} — нет данных`;
+    html+=`<div class="${cls}" style="--intensity:${intensity}" data-tip="${tip}" data-date="${dateStr}">
+      <span class="cal-day-num">${day}</span>
+      ${count>0?'<div class="cal-dot"></div>':''}
+    </div>`;
+  }
+  document.getElementById('calGrid').innerHTML=html;
+}
+
+// Tooltip logic
+const tooltip=document.getElementById('calTooltip');
+document.getElementById('calGrid').addEventListener('mousemove',e=>{
+  const cell=e.target.closest('.cal-cell:not(.empty)');
+  if(!cell){tooltip.classList.remove('visible');return;}
+  tooltip.textContent=cell.dataset.tip||'';
+  tooltip.classList.add('visible');
+  const r=cell.getBoundingClientRect();
+  let x=r.left+r.width/2-tooltip.offsetWidth/2;
+  let y=r.top-tooltip.offsetHeight-8+window.scrollY;
+  if(x<8)x=8;
+  if(x+tooltip.offsetWidth>window.innerWidth-8)x=window.innerWidth-8-tooltip.offsetWidth;
+  tooltip.style.left=x+'px';
+  tooltip.style.top=y+'px';
+});
+document.getElementById('calGrid').addEventListener('mouseleave',()=>tooltip.classList.remove('visible'));
+
 // ── HISTORY ───────────────────────────────────────────────────────────────────
-// Build list: all existing dates + next 10 days, sorted desc
-function getHistoryDates() {
-  const dates = new Set(Object.keys(state.entries));
-  const today = new Date(); today.setHours(0,0,0,0);
-  for (let i = 0; i <= 10; i++) {
-    const d = new Date(today); d.setDate(d.getDate()+i);
-    dates.add(d.toISOString().slice(0,10));
-  }
-  return [...dates].sort((a,b)=>b.localeCompare(a));
+let pastOpen=false;
+function togglePast(){
+  pastOpen=!pastOpen;
+  document.getElementById('pastList').classList.toggle('open',pastOpen);
+  document.getElementById('pastToggle').classList.toggle('open',pastOpen);
+  const label=document.getElementById('pastToggle').querySelector('span:last-child');
+  label.textContent=pastOpen?'СКРЫТЬ':'НАЖМИ ЧТОБЫ РАСКРЫТЬ';
 }
 
-function getWeekLabel(dateStr) {
-  const ws  = getWeekStart(dateStr);
-  const we  = new Date(ws); we.setDate(we.getDate()+6);
-  const fmt = (d) => d.toLocaleDateString('ru-RU', {day:'2-digit', month:'short'});
-  return `${fmt(ws)} — ${fmt(we)}`;
+function getWeekLabel(dateStr){const ws=getWeekStart(dateStr);const we=new Date(ws);we.setDate(we.getDate()+6);const fmt=d=>d.toLocaleDateString('ru-RU',{day:'2-digit',month:'short'});return`${fmt(ws)} — ${fmt(we)}`;}
+
+function makeRow(date,maxVal){
+  const count=state.entries[date]||0;
+  const dt=new Date(date+'T00:00:00');
+  const today=todayStr();
+  const isToday=date===today;
+  const isFuture=date>today;
+  const wd=isWorkDay(dt);
+  const dayName=dt.toLocaleDateString('ru-RU',{weekday:'short',day:'2-digit',month:'short'});
+  const barPct=count>0?Math.min(100,count/maxVal*100):0;
+  const todayMark=isToday?' 📍':'';
+  const wdMark=!wd?' ⛔':'';
+  let cls='history-item';
+  if(isToday)cls+=' is-today';
+  if(isFuture&&!isToday)cls+=' is-future';
+  if(!wd)cls+=' is-weekend';
+  const delBtn=count>0?`<button class="del-btn" onclick="clearEntry('${date}')" title="Очистить">✕</button>`:'<span style="width:26px;display:inline-block"></span>';
+  return`<div class="${cls}" id="row-${date}">
+    <div class="h-date">${dayName}${todayMark}${wdMark}</div>
+    <div class="h-bar"><div class="h-bar-fill" style="width:${barPct}%"></div></div>
+    <input type="number" class="quick-input${count>0?' has-value':''}" id="qi-${date}" value="${count>0?count:''}" min="0" placeholder="—"
+      onchange="quickSave('${date}',this.value)" onkeydown="if(event.key==='Enter')this.blur()"/>
+    ${delBtn}
+  </div>`;
 }
 
-function renderHistory() {
-  const list  = document.getElementById('historyList');
-  const dates = getHistoryDates();
-  const maxVal = Math.max(...Object.values(state.entries), 1);
-  const today = todayStr();
+function renderHistory(){
+  const today=todayStr();
+  const maxVal=Math.max(...Object.values(state.entries),1);
 
-  let html = '';
-  let lastWeekKey = null;
+  // Past dates (before today, sorted descending = newest at bottom = closest to today)
+  const pastDates=Object.keys(state.entries).filter(d=>d<today).sort((a,b)=>a.localeCompare(b)); // asc: oldest top, newest bottom (closest to today)
 
-  dates.forEach(date => {
-    const weekStart   = getWeekStart(date);
-    const weekKey     = weekStart.toISOString().slice(0,10);
-    const d           = new Date(date+'T00:00:00');
-    const isToday     = date === today;
-    const isFuture    = date > today;
-    const wd          = isWorkDay(d);
-    const dayName     = d.toLocaleDateString('ru-RU', {weekday:'short', day:'2-digit', month:'short'});
-    const count       = state.entries[date] || 0;
-    const barPct      = count > 0 ? Math.min(100, count / maxVal * 100) : 0;
+  // Future dates: today + next 10 days
+  const futureDates=[];
+  const base=new Date();base.setHours(0,0,0,0);
+  for(let i=0;i<=10;i++){const d=new Date(base);d.setDate(d.getDate()+i);futureDates.push(d.toISOString().slice(0,10));}
 
-    // Week divider
-    if (weekKey !== lastWeekKey) {
-      lastWeekKey = weekKey;
-      html += `<div class="week-divider">${getWeekLabel(date)}</div>`;
-    }
+  // Update past count label
+  document.getElementById('pastLabel').textContent=`предыдущие дни (${pastDates.length})`;
 
-    // Row classes
-    let cls = 'history-item';
-    if (isToday) cls += ' is-today';
-    if (isFuture && !isToday) cls += ' is-future';
-    if (!wd) cls += ' is-weekend';
-
-    const todayMark  = isToday ? ' 📍' : '';
-    const wdMark     = !wd ? ' ⛔' : '';
-    const inputCls   = count > 0 ? 'quick-input has-value' : 'quick-input';
-    const delBtn     = count > 0
-      ? `<button class="del-btn" onclick="clearEntry('${date}')" title="Очистить">✕</button>`
-      : '<span style="width:26px;display:inline-block"></span>';
-
-    html += `
-      <div class="${cls}" id="row-${date}">
-        <div class="history-date">${dayName}${todayMark}${wdMark}</div>
-        <div class="history-bar"><div class="history-bar-fill" style="width:${barPct}%"></div></div>
-        <input
-          type="number"
-          class="${inputCls}"
-          id="qi-${date}"
-          value="${count > 0 ? count : ''}"
-          min="0"
-          placeholder="—"
-          onchange="quickSave('${date}', this.value)"
-          onkeydown="if(event.key==='Enter') this.blur()"
-        />
-        ${delBtn}
-      </div>`;
+  // Render past list (inside collapsible)
+  let pastHtml='';
+  let lastWk=null;
+  pastDates.forEach(date=>{
+    const wk=getWeekStart(date).toISOString().slice(0,10);
+    if(wk!==lastWk){lastWk=wk;pastHtml+=`<div class="week-divider">${getWeekLabel(date)}</div>`;}
+    pastHtml+=makeRow(date,maxVal);
   });
+  document.getElementById('pastList').innerHTML=pastHtml;
 
-  list.innerHTML = html;
+  // Render future (today first then +1..+10)
+  let futHtml='';
+  let lastFWk=null;
+  futureDates.forEach(date=>{
+    const wk=getWeekStart(date).toISOString().slice(0,10);
+    if(wk!==lastFWk){lastFWk=wk;futHtml+=`<div class="week-divider">${getWeekLabel(date)}</div>`;}
+    futHtml+=makeRow(date,maxVal);
+  });
+  document.getElementById('futureList').innerHTML=futHtml;
 }
 
-function quickSave(date, val) {
-  const n = parseInt(val);
-  if (isNaN(n) || n < 0) return;
-  if (n === 0) {
-    delete state.entries[date];
-  } else {
-    state.entries[date] = n;
-  }
+function quickSave(date,val){
+  const n=parseInt(val);
+  if(isNaN(n)||n<0)return;
+  if(n===0)delete state.entries[date];
+  else state.entries[date]=n;
   save();
-  // Refresh bar + class without full re-render
-  const total  = getTotalLeads();
-  const goal   = state.goalTotal || 0;
-  const maxVal = Math.max(...Object.values(state.entries), 1);
-  const pct    = goal > 0 ? Math.min(100, Math.round(total/goal*100)) : 0;
-
-  document.getElementById('totalLeads').textContent  = total.toLocaleString();
-  document.getElementById('remaining').textContent   = goal ? Math.max(0,goal-total).toLocaleString() : '—';
-  document.getElementById('progressPct').textContent = pct+'%';
-  document.getElementById('progressFill').style.width= pct+'%';
-  document.getElementById('dailyNorm').textContent   = getDailyNorm() || '—';
-  document.getElementById('weeklyNorm').textContent  = getWeeklyNorm() || '—';
-
-  // Update bar for this row
-  const fill = document.querySelector(`#row-${date} .history-bar-fill`);
-  if (fill) fill.style.width = (n > 0 ? Math.min(100, n/maxVal*100) : 0)+'%';
-  const inp = document.getElementById('qi-'+date);
-  if (inp) inp.className = n > 0 ? 'quick-input has-value' : 'quick-input';
-
-  renderChart();
-  showToast(`Сохранено: ${date} → ${n}`);
+  // Lightweight update
+  const total=getTotalLeads(),goal=state.goalTotal||0,pct=goal>0?Math.min(100,Math.round(total/goal*100)):0;
+  document.getElementById('totalLeads').textContent=total.toLocaleString();
+  document.getElementById('remaining').textContent=goal?Math.max(0,goal-total).toLocaleString():'—';
+  document.getElementById('progressPct').textContent=pct+'%';
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('dailyNorm').textContent=getDailyNorm()||'—';
+  document.getElementById('weeklyNorm').textContent=getWeeklyNorm()||'—';
+  const inp=document.getElementById('qi-'+date);
+  if(inp)inp.className=n>0?'quick-input has-value':'quick-input';
+  const maxVal=Math.max(...Object.values(state.entries),1);
+  const fill=document.querySelector(`#row-${date} .h-bar-fill`);
+  if(fill)fill.style.width=(n>0?Math.min(100,n/maxVal*100):0)+'%';
+  renderCalendar();renderChart();
+  showToast(`Сохранено ✓`);
 }
-
-function clearEntry(date) {
-  delete state.entries[date];
-  save(); render();
-  showToast('Запись очищена');
-}
+function clearEntry(date){delete state.entries[date];save();render();renderCalendar();showToast('Очищено');}
 
 // ── CHART ─────────────────────────────────────────────────────────────────────
-const YMAX = 50;
-function renderChart() {
-  const canvas = document.getElementById('chartCanvas');
-  const ctx    = canvas.getContext('2d');
-  const dpr    = window.devicePixelRatio || 1;
-  const W      = canvas.offsetWidth;
-  const H      = 180;
-  canvas.width  = W * dpr;
-  canvas.height = H * dpr;
-  ctx.scale(dpr, dpr);
-  ctx.clearRect(0, 0, W, H);
-
-  // Only past & today entries
-  const today   = todayStr();
-  const entries = Object.entries(state.entries)
-    .filter(([d]) => d <= today)
-    .sort((a,b)=>a[0].localeCompare(b[0]));
-
-  if (!entries.length) {
-    ctx.fillStyle = 'rgba(255,255,255,0.15)';
-    ctx.font = '13px Share Tech Mono'; ctx.textAlign = 'center';
-    ctx.fillText('нет данных', W/2, H/2);
-    return;
-  }
-
-  const pad = {left:36, right:16, top:20, bottom:36};
-  const gW  = W - pad.left - pad.right;
-  const gH  = H - pad.top  - pad.bottom;
-  const N   = entries.length;
-
-  for (let v = 0; v <= YMAX; v += 10) {
-    const y = pad.top + gH - (v/YMAX)*gH;
-    ctx.strokeStyle = v===0 ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.05)';
-    ctx.lineWidth=1; ctx.setLineDash([]);
-    ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(pad.left+gW,y); ctx.stroke();
-    ctx.fillStyle='rgba(255,255,255,0.25)';
-    ctx.font='9px Share Tech Mono'; ctx.textAlign='right';
-    ctx.fillText(v, pad.left-5, y+3);
-  }
-
-  // Norm line
-  const norm = getDailyNorm();
-  if (norm > 0 && norm <= YMAX) {
-    const ny = pad.top + gH - (norm/YMAX)*gH;
-    ctx.setLineDash([4,4]); ctx.strokeStyle='rgba(255,204,0,0.55)'; ctx.lineWidth=1.5;
-    ctx.beginPath(); ctx.moveTo(pad.left,ny); ctx.lineTo(pad.left+gW,ny); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle='rgba(255,204,0,0.7)'; ctx.font='9px Share Tech Mono'; ctx.textAlign='left';
-    ctx.fillText('норма/день', pad.left+4, ny-4);
-  }
-
-  const barW  = Math.max(5, Math.min(32, gW/N - 5));
-  const xStep = gW / N;
-
-  entries.forEach(([date, count], i) => {
-    const x = pad.left + i*xStep + (xStep-barW)/2;
-    const h = Math.min(count, YMAX)/YMAX * gH;
-    const y = pad.top + gH - h;
-    if (h < 1) return;
-
-    const g = ctx.createLinearGradient(0,y,0,pad.top+gH);
-    g.addColorStop(0,'rgba(0,240,255,0.9)');
-    g.addColorStop(1,'rgba(180,0,255,0.25)');
-    ctx.fillStyle=g;
-    ctx.shadowColor='rgba(0,240,255,0.45)'; ctx.shadowBlur=8;
-    ctx.beginPath();
-    if (ctx.roundRect) ctx.roundRect(x,y,barW,h,[3,3,0,0]);
-    else ctx.rect(x,y,barW,h);
-    ctx.fill(); ctx.shadowBlur=0;
-
-    if (h>14) {
-      ctx.fillStyle='rgba(255,255,255,0.65)';
-      ctx.font='bold 9px Share Tech Mono'; ctx.textAlign='center';
-      ctx.fillText(count>YMAX?YMAX+'+':count, x+barW/2, y-4);
-    }
-    if (N<=15 || i%Math.ceil(N/15)===0 || i===N-1) {
-      const dl  = new Date(date+'T00:00:00');
-      const lbl = dl.toLocaleDateString('ru-RU',{day:'2-digit',month:'short'});
-      ctx.fillStyle='rgba(255,255,255,0.3)';
-      ctx.font='9px Share Tech Mono'; ctx.textAlign='center';
-      ctx.fillText(lbl, x+barW/2, H-8);
-    }
+const YMAX=50;
+function renderChart(){
+  const canvas=document.getElementById('chartCanvas');
+  const ctx=canvas.getContext('2d');
+  const dpr=window.devicePixelRatio||1,W=canvas.offsetWidth,H=180;
+  canvas.width=W*dpr;canvas.height=H*dpr;ctx.scale(dpr,dpr);ctx.clearRect(0,0,W,H);
+  const today=todayStr();
+  const entries=Object.entries(state.entries).filter(([d])=>d<=today).sort((a,b)=>a[0].localeCompare(b[0]));
+  if(!entries.length){ctx.fillStyle='rgba(255,255,255,0.15)';ctx.font='13px Share Tech Mono';ctx.textAlign='center';ctx.fillText('нет данных',W/2,H/2);return;}
+  const pad={left:36,right:16,top:20,bottom:36},gW=W-pad.left-pad.right,gH=H-pad.top-pad.bottom,N=entries.length;
+  for(let v=0;v<=YMAX;v+=10){const y=pad.top+gH-(v/YMAX)*gH;ctx.strokeStyle=v===0?'rgba(255,255,255,0.1)':'rgba(255,255,255,0.05)';ctx.lineWidth=1;ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(pad.left,y);ctx.lineTo(pad.left+gW,y);ctx.stroke();ctx.fillStyle='rgba(255,255,255,0.25)';ctx.font='9px Share Tech Mono';ctx.textAlign='right';ctx.fillText(v,pad.left-5,y+3);}
+  const norm=getDailyNorm();
+  if(norm>0&&norm<=YMAX){const ny=pad.top+gH-(norm/YMAX)*gH;ctx.setLineDash([4,4]);ctx.strokeStyle='rgba(255,204,0,0.55)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(pad.left,ny);ctx.lineTo(pad.left+gW,ny);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='rgba(255,204,0,0.7)';ctx.font='9px Share Tech Mono';ctx.textAlign='left';ctx.fillText('норма/день',pad.left+4,ny-4);}
+  const barW=Math.max(5,Math.min(32,gW/N-5)),xStep=gW/N;
+  entries.forEach(([date,count],i)=>{
+    const x=pad.left+i*xStep+(xStep-barW)/2,h=Math.min(count,YMAX)/YMAX*gH,y=pad.top+gH-h;
+    if(h<1)return;
+    const g=ctx.createLinearGradient(0,y,0,pad.top+gH);g.addColorStop(0,'rgba(0,240,255,0.9)');g.addColorStop(1,'rgba(180,0,255,0.25)');
+    ctx.fillStyle=g;ctx.shadowColor='rgba(0,240,255,0.45)';ctx.shadowBlur=8;
+    ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x,y,barW,h,[3,3,0,0]);else ctx.rect(x,y,barW,h);ctx.fill();ctx.shadowBlur=0;
+    if(h>14){ctx.fillStyle='rgba(255,255,255,0.65)';ctx.font='bold 9px Share Tech Mono';ctx.textAlign='center';ctx.fillText(count>YMAX?YMAX+'+':count,x+barW/2,y-4);}
+    if(N<=15||i%Math.ceil(N/15)===0||i===N-1){const dl=new Date(date+'T00:00:00');ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='9px Share Tech Mono';ctx.textAlign='center';ctx.fillText(dl.toLocaleDateString('ru-RU',{day:'2-digit',month:'short'}),x+barW/2,H-8);}
   });
 }
 
 // ── UTILS ─────────────────────────────────────────────────────────────────────
-function updateCurrentDate() {
-  document.getElementById('currentDate').textContent =
-    new Date().toLocaleDateString('ru-RU',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  setTimeout(updateCurrentDate, 60000);
-}
-function showToast(msg) {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
-}
-window.addEventListener('resize', renderChart);
+function updateCurrentDate(){document.getElementById('currentDate').textContent=new Date().toLocaleDateString('ru-RU',{weekday:'long',year:'numeric',month:'long',day:'numeric'});setTimeout(updateCurrentDate,60000);}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
+window.addEventListener('resize',renderChart);
 init();
 </script>
 </body>
