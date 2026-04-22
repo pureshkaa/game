@@ -32,8 +32,7 @@
     overflow-x: hidden;
   }
   body::before {
-    content:'';
-    position:fixed; inset:0;
+    content:''; position:fixed; inset:0;
     background-image:
       linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
@@ -41,8 +40,7 @@
     pointer-events:none; z-index:0;
   }
   body::after {
-    content:'';
-    position:fixed; top:-50%; left:-50%; width:200%; height:200%;
+    content:''; position:fixed; top:-50%; left:-50%; width:200%; height:200%;
     background:
       radial-gradient(ellipse at 20% 20%, rgba(180,0,255,0.06) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 80%, rgba(0,240,255,0.06) 0%, transparent 50%);
@@ -60,14 +58,39 @@
     padding:32px 24px 60px;
   }
 
+  /* ── HEADER ── */
   header {
-    display:flex; justify-content:space-between; align-items:flex-start;
+    display:flex; justify-content:space-between; align-items:center;
     margin-bottom:40px; gap:20px; flex-wrap:wrap;
   }
+  .header-left {
+    display:flex; align-items:center; gap:16px;
+  }
+
+  /* CAT */
+  .cat {
+    font-size:32px; line-height:1;
+    filter: drop-shadow(0 0 8px rgba(0,240,255,0.5));
+    animation: catFloat 3s ease-in-out infinite;
+    flex-shrink:0;
+    user-select:none;
+    cursor:default;
+  }
+  @keyframes catFloat {
+    0%,100% { transform: translateY(0px) rotate(-2deg); }
+    50%      { transform: translateY(-4px) rotate(2deg); }
+  }
+  .cat:hover { animation: catSpin .4s ease; }
+  @keyframes catSpin {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.3) rotate(10deg); }
+    100% { transform: scale(1); }
+  }
+
   .logo { display:flex; flex-direction:column; gap:4px; }
   .logo h1 {
     font-family:'Orbitron', monospace;
-    font-size: clamp(22px,4vw,38px); font-weight:900; letter-spacing:6px;
+    font-size: clamp(18px,3.5vw,34px); font-weight:900; letter-spacing:6px;
     background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
     -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
     line-height:1;
@@ -76,9 +99,7 @@
     font-family:'Share Tech Mono', monospace;
     font-size:11px; color:var(--cyan); letter-spacing:4px; opacity:.6;
   }
-  .header-right {
-    display:flex; align-items:center; gap:14px;
-  }
+  .header-right { display:flex; align-items:center; gap:14px; }
   .header-date {
     font-family:'Share Tech Mono', monospace;
     font-size:12px; color:var(--muted); text-align:right; line-height:1.8;
@@ -96,7 +117,7 @@
     box-shadow: var(--glow-cyan);
   }
 
-  /* MODAL */
+  /* ── MODAL ── */
   .modal-overlay {
     display:none; position:fixed; inset:0;
     background: rgba(0,0,0,0.75); backdrop-filter:blur(6px);
@@ -109,8 +130,7 @@
     box-shadow: 0 0 40px rgba(0,240,255,0.15);
     border-radius:20px; padding:32px;
     width:100%; max-width:440px; margin:16px;
-    position:relative;
-    animation: fadeIn .25s ease;
+    position:relative; animation: fadeIn .25s ease;
   }
   .modal-title {
     font-family:'Orbitron', monospace; font-size:14px; letter-spacing:3px;
@@ -123,6 +143,7 @@
   }
   .modal-close:hover { color:var(--text); }
 
+  /* ── INPUTS ── */
   .field-group { display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
   label {
     font-family:'Share Tech Mono', monospace;
@@ -136,10 +157,7 @@
     font-size:16px; font-weight:600; outline:none;
     transition: border-color .2s, box-shadow .2s; width:100%;
   }
-  input:focus {
-    border-color:var(--cyan);
-    box-shadow: 0 0 12px rgba(0,240,255,0.2);
-  }
+  input:focus { border-color:var(--cyan); box-shadow: 0 0 12px rgba(0,240,255,0.2); }
   input[type="date"]::-webkit-calendar-picker-indicator { filter:invert(1) opacity(.4); }
   .btn {
     width:100%; padding:12px; border-radius:10px; border:none;
@@ -153,14 +171,13 @@
   }
   .btn-primary:hover { transform:translateY(-1px); box-shadow: 0 6px 28px rgba(0,240,255,0.5); }
 
-  /* STATS */
+  /* ── STATS ── */
   .stats-grid {
     display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
     gap:16px; margin-bottom:24px;
   }
   .card {
-    background:var(--surface);
-    border:1px solid var(--border);
+    background:var(--surface); border:1px solid var(--border);
     border-radius:16px; padding:20px 22px;
     position:relative; overflow:hidden;
     transition:transform .2s; backdrop-filter:blur(10px);
@@ -190,7 +207,7 @@
   .card.green  .card-value { color:var(--green);  text-shadow:var(--glow-green); }
   .card-sub { font-size:13px; color:var(--muted); font-weight:300; }
 
-  /* PROGRESS */
+  /* ── PROGRESS ── */
   .progress-section {
     background:var(--surface); border:1px solid var(--border);
     border-radius:16px; padding:24px; margin-bottom:24px; backdrop-filter:blur(10px);
@@ -223,7 +240,7 @@
     box-shadow: 0 0 12px var(--cyan), 0 0 24px var(--purple);
   }
 
-  /* CHART */
+  /* ── CHART ── */
   .chart-section {
     background:var(--surface); border:1px solid var(--border);
     border-radius:16px; padding:24px; margin-bottom:24px; backdrop-filter:blur(10px);
@@ -235,33 +252,35 @@
   }
   #chartCanvas { width:100%; display:block; }
 
-  /* HISTORY */
+  /* ── HISTORY ── */
   .history-section {
     background:var(--surface); border:1px solid var(--border);
     border-radius:16px; padding:24px; backdrop-filter:blur(10px);
   }
   .history-header {
-    display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;
+    display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;
   }
-  .add-row-btn {
-    display:flex; align-items:center; gap:6px;
-    background: rgba(0,240,255,0.07);
-    border: 1px solid rgba(0,240,255,0.2);
-    border-radius:8px; padding:6px 14px;
-    cursor:pointer; color:var(--cyan);
-    font-family:'Share Tech Mono', monospace; font-size:11px; letter-spacing:2px;
-    transition:all .2s;
+  .week-label {
+    font-family:'Share Tech Mono', monospace;
+    font-size:10px; letter-spacing:2px; color:var(--purple);
+    text-transform:uppercase; padding:4px 0 16px;
+    border-bottom: 1px solid rgba(180,0,255,0.15);
+    margin-bottom:4px;
   }
-  .add-row-btn:hover { background:rgba(0,240,255,0.14); box-shadow:var(--glow-cyan); }
 
+  /* Row */
   .history-item {
     display:flex; align-items:center;
-    padding:10px 0; border-bottom:1px solid var(--border); gap:12px;
+    padding:8px 0; border-bottom:1px solid var(--border); gap:12px;
   }
   .history-item:last-child { border-bottom:none; }
+  .history-item.is-today .history-date { color: var(--cyan); }
+  .history-item.is-future { opacity:.55; }
+  .history-item.is-weekend .history-date { color: var(--pink); opacity:.7; }
+
   .history-date {
     font-family:'Share Tech Mono', monospace;
-    font-size:12px; color:var(--muted); flex-shrink:0; min-width:90px;
+    font-size:12px; color:var(--muted); flex-shrink:0; min-width:110px;
   }
   .history-bar { flex:1; height:4px; background:rgba(255,255,255,0.06); border-radius:99px; overflow:hidden; }
   .history-bar-fill {
@@ -269,54 +288,47 @@
     background: linear-gradient(90deg, var(--cyan), var(--purple));
     transition:width .5s ease;
   }
-  .history-count {
-    font-family:'Orbitron', monospace; font-size:18px; font-weight:700; color:var(--cyan);
-    min-width:36px; text-align:right;
+
+  /* Quick number input */
+  .quick-input {
+    width:72px !important; flex-shrink:0;
+    padding:5px 8px !important; font-size:15px !important;
+    text-align:center; border-radius:8px !important;
+    color:var(--cyan) !important;
+    font-family:'Orbitron', monospace !important;
+    font-weight:700 !important;
+    -moz-appearance:textfield;
   }
-  .row-pencil {
-    background:none; border:none; color:rgba(255,255,255,0.2);
-    cursor:pointer; font-size:13px; padding:4px 6px; border-radius:6px;
-    transition:all .2s; flex-shrink:0;
+  .quick-input::-webkit-outer-spin-button,
+  .quick-input::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+  .quick-input:focus { border-color:var(--cyan) !important; }
+  .quick-input.has-value {
+    background: rgba(0,240,255,0.05) !important;
+    border-color: rgba(0,240,255,0.25) !important;
   }
-  .row-pencil:hover { color:var(--cyan); background:rgba(0,240,255,0.08); }
+
   .del-btn {
-    background:none; border:none; color:rgba(255,60,60,0.35);
+    background:none; border:none; color:rgba(255,60,60,0.3);
     cursor:pointer; font-size:13px; padding:4px 6px; border-radius:6px;
-    transition:all .2s; flex-shrink:0;
+    transition:all .2s; flex-shrink:0; opacity:0;
   }
+  .history-item:hover .del-btn { opacity:1; }
   .del-btn:hover { color:#ff4444; background:rgba(255,0,0,0.1); }
 
-  .edit-row {
+  /* Divider between weeks */
+  .week-divider {
     display:flex; align-items:center; gap:10px;
-    padding:8px 0; border-bottom:1px solid var(--border); flex-wrap:wrap;
+    padding:10px 0 6px;
+    font-family:'Share Tech Mono', monospace;
+    font-size:10px; letter-spacing:2px; color:rgba(180,0,255,0.5);
+    text-transform:uppercase;
   }
-  .edit-row input[type="date"] { flex:0 0 150px; padding:7px 10px; font-size:14px; }
-  .edit-row input[type="number"] { flex:0 0 90px; padding:7px 10px; font-size:14px; }
-  .save-btn {
-    background: linear-gradient(135deg, var(--cyan), var(--purple));
-    border:none; border-radius:8px; padding:8px 16px;
-    font-family:'Orbitron', monospace; font-size:10px; letter-spacing:2px;
-    color:#000; font-weight:700; cursor:pointer; transition:opacity .2s;
+  .week-divider::before, .week-divider::after {
+    content:''; flex:1; height:1px;
+    background: rgba(180,0,255,0.15);
   }
-  .save-btn:hover { opacity:.85; }
-  .cancel-btn {
-    background:none; border:1px solid var(--border); border-radius:8px;
-    padding:8px 12px; color:var(--muted); font-size:12px; font-family:'Rajdhani',sans-serif;
-    cursor:pointer; transition:all .2s;
-  }
-  .cancel-btn:hover { color:var(--text); }
 
-  .empty-state {
-    text-align:center; color:var(--muted); font-size:13px; padding:20px 0;
-    font-family:'Share Tech Mono', monospace; letter-spacing:1px;
-  }
-  .streak-badge {
-    display:inline-flex; align-items:center; gap:6px;
-    background: linear-gradient(135deg, rgba(255,204,0,0.1), rgba(255,120,0,0.1));
-    border:1px solid rgba(255,204,0,0.3); border-radius:99px;
-    padding:4px 12px 4px 8px; font-family:'Orbitron', monospace;
-    font-size:11px; color:var(--yellow); margin-top:8px;
-  }
+  /* ── TOAST ── */
   .toast {
     position:fixed; bottom:30px; right:30px;
     background:rgba(10,10,20,0.95);
@@ -338,10 +350,14 @@
 <body>
 <div class="container">
 
+  <!-- HEADER -->
   <header>
-    <div class="logo">
-      <h1 id="goalTitle">LEADS TRACKER</h1>
-      <div class="logo-sub">PERFORMANCE DASHBOARD</div>
+    <div class="header-left">
+      <div class="cat" title="мяу">🐱</div>
+      <div class="logo">
+        <h1 id="goalTitle">LEADS TRACKER</h1>
+        <div class="logo-sub">PERFORMANCE DASHBOARD</div>
+      </div>
     </div>
     <div class="header-right">
       <div class="header-date">
@@ -352,6 +368,7 @@
     </div>
   </header>
 
+  <!-- STAT CARDS -->
   <div class="stats-grid">
     <div class="card cyan">
       <div class="card-label">Всего лидов</div>
@@ -369,12 +386,13 @@
       <div class="card-sub">рабочих: <span id="workDaysLeft">—</span></div>
     </div>
     <div class="card green">
-      <div class="card-label">Сегодня</div>
-      <div class="card-value" id="todayCount">0</div>
-      <div id="streakBadge"></div>
+      <div class="card-label">Норма в неделю</div>
+      <div class="card-value" id="weeklyNorm">—</div>
+      <div class="card-sub">недель: <span id="weeksLeft">—</span></div>
     </div>
   </div>
 
+  <!-- PROGRESS -->
   <div class="progress-section">
     <div class="progress-header">
       <div class="progress-title">📈 прогресс к цели</div>
@@ -385,18 +403,20 @@
     </div>
   </div>
 
+  <!-- CHART -->
   <div class="chart-section">
     <div class="section-title">📊 динамика по дням</div>
     <canvas id="chartCanvas" height="180"></canvas>
   </div>
 
+  <!-- HISTORY -->
   <div class="history-section">
     <div class="history-header">
       <div class="section-title" style="margin-bottom:0">🗂 история</div>
-      <button class="add-row-btn" onclick="addNewRow()">+ добавить день</button>
     </div>
-    <div id="historyList"><div class="empty-state">нет данных — нажми «+ добавить день»</div></div>
+    <div id="historyList"></div>
   </div>
+
 </div>
 
 <!-- SETTINGS MODAL -->
@@ -423,43 +443,72 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ── RUSSIAN PUBLIC HOLIDAYS (MM-DD) ──────────────────────────────────────────
+// ── HOLIDAYS (MM-DD) ──────────────────────────────────────────────────────────
 const RU_HOLIDAYS = new Set([
   '01-01','01-02','01-03','01-04','01-05','01-06','01-07','01-08',
   '02-23','03-08','05-01','05-09','06-12','11-04'
 ]);
-
 function isWorkDay(date) {
-  const d = new Date(date);
+  const d   = new Date(date);
   const day = d.getDay();
   if (day === 0 || day === 6) return false;
   const mm = String(d.getMonth()+1).padStart(2,'0');
   const dd = String(d.getDate()).padStart(2,'0');
   return !RU_HOLIDAYS.has(`${mm}-${dd}`);
 }
-
 function countWorkDays(from, to) {
-  let count = 0;
-  const cur = new Date(from); cur.setHours(0,0,0,0);
-  const end = new Date(to);   end.setHours(0,0,0,0);
-  while (cur <= end) { if (isWorkDay(cur)) count++; cur.setDate(cur.getDate()+1); }
-  return count;
+  let n = 0;
+  const c = new Date(from); c.setHours(0,0,0,0);
+  const e = new Date(to);   e.setHours(0,0,0,0);
+  while (c <= e) { if (isWorkDay(c)) n++; c.setDate(c.getDate()+1); }
+  return n;
+}
+
+// ── Week helpers (Thu→Thu) ────────────────────────────────────────────────────
+// Returns the Thursday that starts the week containing `date`
+function getWeekStart(date) {
+  const d   = new Date(date); d.setHours(0,0,0,0);
+  const day = d.getDay(); // 0=Sun,1=Mon,...,4=Thu
+  const diff = (day - 4 + 7) % 7; // days since last Thursday
+  d.setDate(d.getDate() - diff);
+  return d;
+}
+// Count remaining full weeks (Thu→Thu boundaries) from today to deadline
+function getRemainingWeeks() {
+  if (!state.deadline) return null;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const dl    = new Date(state.deadline); dl.setHours(0,0,0,0);
+  if (dl <= today) return 0;
+  // Find next Thursday after today
+  const todayDay = today.getDay();
+  const daysToNextThu = todayDay === 4 ? 7 : (4 - todayDay + 7) % 7;
+  let nextThu = new Date(today);
+  nextThu.setDate(nextThu.getDate() + daysToNextThu);
+  let weeks = 0;
+  const cur = new Date(nextThu);
+  while (cur <= dl) { weeks++; cur.setDate(cur.getDate()+7); }
+  return weeks;
 }
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 let state = { goalName:'', goalTotal:0, deadline:'', entries:{} };
-
 const todayStr = () => new Date().toISOString().slice(0,10);
-const save     = () => localStorage.setItem('leads_v3', JSON.stringify(state));
+const save     = () => localStorage.setItem('leads_v4', JSON.stringify(state));
 
 function init() {
-  const saved = localStorage.getItem('leads_v3');
-  if (saved) state = JSON.parse(saved);
+  const saved = localStorage.getItem('leads_v4');
+  // migrate from old key
+  if (!saved) {
+    const old = localStorage.getItem('leads_v3');
+    if (old) { state = JSON.parse(old); save(); }
+  } else {
+    state = JSON.parse(saved);
+  }
   updateCurrentDate();
   render();
 }
 
-// ── SETTINGS ─────────────────────────────────────────────────────────────────
+// ── SETTINGS ──────────────────────────────────────────────────────────────────
 function openSettings() {
   document.getElementById('s_goalName').value  = state.goalName  || '';
   document.getElementById('s_goalTotal').value = state.goalTotal || '';
@@ -467,7 +516,7 @@ function openSettings() {
   document.getElementById('modalOverlay').classList.add('open');
 }
 function closeSettings() { document.getElementById('modalOverlay').classList.remove('open'); }
-function closeOnBg(e)    { if (e.target.id === 'modalOverlay') closeSettings(); }
+function closeOnBg(e)    { if (e.target.id==='modalOverlay') closeSettings(); }
 function saveSettings() {
   state.goalName  = document.getElementById('s_goalName').value.trim() || 'LEADS TRACKER';
   state.goalTotal = parseInt(document.getElementById('s_goalTotal').value) || 0;
@@ -477,8 +526,7 @@ function saveSettings() {
 }
 
 // ── CALC ──────────────────────────────────────────────────────────────────────
-function getTotalLeads()  { return Object.values(state.entries).reduce((a,b)=>a+b,0); }
-
+function getTotalLeads() { return Object.values(state.entries).reduce((a,b)=>a+b,0); }
 function getWorkDaysLeft() {
   if (!state.deadline) return null;
   const today = new Date(); today.setHours(0,0,0,0);
@@ -499,131 +547,160 @@ function getDailyNorm() {
   if (!wdl || rem <= 0) return 0;
   return Math.ceil(rem / wdl);
 }
-function getStreak() {
-  let streak = 0;
-  const cur = new Date(); cur.setHours(0,0,0,0);
-  for (let i = 0; i < 365; i++) {
-    const d = cur.toISOString().slice(0,10);
-    if (state.entries[d] > 0) { streak++; cur.setDate(cur.getDate()-1); }
-    else if (i === 0) { cur.setDate(cur.getDate()-1); }
-    else break;
-  }
-  return streak;
+function getWeeklyNorm() {
+  const rem   = (state.goalTotal||0) - getTotalLeads();
+  const weeks = getRemainingWeeks();
+  if (!weeks || rem <= 0) return 0;
+  return Math.ceil(rem / weeks);
 }
 
 // ── RENDER ────────────────────────────────────────────────────────────────────
 function render() {
-  const total = getTotalLeads();
-  const goal  = state.goalTotal || 0;
-  const rem   = Math.max(0, goal - total);
-  const wdl   = getWorkDaysLeft();
-  const cal   = getCalDaysLeft();
-  const norm  = getDailyNorm();
-  const pct   = goal > 0 ? Math.min(100, Math.round(total/goal*100)) : 0;
-  const today = todayStr();
+  const total  = getTotalLeads();
+  const goal   = state.goalTotal || 0;
+  const rem    = Math.max(0, goal - total);
+  const wdl    = getWorkDaysLeft();
+  const cal    = getCalDaysLeft();
+  const norm   = getDailyNorm();
+  const wnorm  = getWeeklyNorm();
+  const weeks  = getRemainingWeeks();
+  const pct    = goal > 0 ? Math.min(100, Math.round(total/goal*100)) : 0;
 
-  document.getElementById('goalTitle').textContent  = (state.goalName||'LEADS TRACKER').toUpperCase();
-  document.getElementById('daysLeftEl').textContent = cal !== null ? `⏳ ${cal} дней до дедлайна` : '';
-  document.getElementById('totalLeads').textContent  = total.toLocaleString();
-  document.getElementById('goalDisplay').textContent = goal ? goal.toLocaleString() : '—';
-  document.getElementById('remaining').textContent   = goal ? rem.toLocaleString() : '—';
-  document.getElementById('dailyNorm').textContent   = norm || '—';
+  document.getElementById('goalTitle').textContent    = (state.goalName||'LEADS TRACKER').toUpperCase();
+  document.getElementById('daysLeftEl').textContent   = cal !== null ? `⏳ ${cal} дней до дедлайна` : '';
+  document.getElementById('totalLeads').textContent   = total.toLocaleString();
+  document.getElementById('goalDisplay').textContent  = goal ? goal.toLocaleString() : '—';
+  document.getElementById('remaining').textContent    = goal ? rem.toLocaleString() : '—';
+  document.getElementById('dailyNorm').textContent    = norm || '—';
   document.getElementById('workDaysLeft').textContent = wdl !== null ? wdl : '—';
-  document.getElementById('todayCount').textContent  = (state.entries[today]||0).toLocaleString();
-
-  const streak = getStreak();
-  document.getElementById('streakBadge').innerHTML =
-    streak > 1 ? `<div class="streak-badge">🔥 ${streak} дней подряд</div>` : '';
-
-  document.getElementById('progressPct').textContent   = pct+'%';
-  document.getElementById('progressFill').style.width  = pct+'%';
+  document.getElementById('weeklyNorm').textContent   = wnorm || '—';
+  document.getElementById('weeksLeft').textContent    = weeks !== null ? weeks : '—';
+  document.getElementById('progressPct').textContent  = pct+'%';
+  document.getElementById('progressFill').style.width = pct+'%';
 
   renderHistory();
   renderChart();
 }
 
 // ── HISTORY ───────────────────────────────────────────────────────────────────
-function renderHistory() {
-  const list    = document.getElementById('historyList');
-  const entries = Object.entries(state.entries).sort((a,b)=>b[0].localeCompare(a[0]));
-  if (!entries.length) {
-    list.innerHTML = '<div class="empty-state">нет данных — нажми «+ добавить день»</div>';
-    return;
+// Build list: all existing dates + next 10 days, sorted desc
+function getHistoryDates() {
+  const dates = new Set(Object.keys(state.entries));
+  const today = new Date(); today.setHours(0,0,0,0);
+  for (let i = 0; i <= 10; i++) {
+    const d = new Date(today); d.setDate(d.getDate()+i);
+    dates.add(d.toISOString().slice(0,10));
   }
-  const maxVal = Math.max(...entries.map(e=>e[1]), 1);
-  list.innerHTML = entries.map(([date, count]) => {
-    const pct = count / maxVal * 100;
-    const d   = new Date(date+'T00:00:00');
-    const lbl = d.toLocaleDateString('ru-RU', {day:'2-digit', month:'short', weekday:'short'});
-    const wd  = isWorkDay(d);
-    const tag = wd ? '' : `<span style="font-size:10px;color:var(--pink);margin-left:3px" title="нерабочий">⛔</span>`;
-    return `
-      <div class="history-item" id="row-${date}">
-        <div class="history-date">${lbl}${tag}</div>
-        <div class="history-bar"><div class="history-bar-fill" style="width:${pct}%"></div></div>
-        <div class="history-count">${count}</div>
-        <button class="row-pencil" onclick="editRow('${date}')" title="Редактировать">✏️</button>
-        <button class="del-btn" onclick="deleteEntry('${date}')" title="Удалить">✕</button>
+  return [...dates].sort((a,b)=>b.localeCompare(a));
+}
+
+function getWeekLabel(dateStr) {
+  const ws  = getWeekStart(dateStr);
+  const we  = new Date(ws); we.setDate(we.getDate()+6);
+  const fmt = (d) => d.toLocaleDateString('ru-RU', {day:'2-digit', month:'short'});
+  return `${fmt(ws)} — ${fmt(we)}`;
+}
+
+function renderHistory() {
+  const list  = document.getElementById('historyList');
+  const dates = getHistoryDates();
+  const maxVal = Math.max(...Object.values(state.entries), 1);
+  const today = todayStr();
+
+  let html = '';
+  let lastWeekKey = null;
+
+  dates.forEach(date => {
+    const weekStart   = getWeekStart(date);
+    const weekKey     = weekStart.toISOString().slice(0,10);
+    const d           = new Date(date+'T00:00:00');
+    const isToday     = date === today;
+    const isFuture    = date > today;
+    const wd          = isWorkDay(d);
+    const dayName     = d.toLocaleDateString('ru-RU', {weekday:'short', day:'2-digit', month:'short'});
+    const count       = state.entries[date] || 0;
+    const barPct      = count > 0 ? Math.min(100, count / maxVal * 100) : 0;
+
+    // Week divider
+    if (weekKey !== lastWeekKey) {
+      lastWeekKey = weekKey;
+      html += `<div class="week-divider">${getWeekLabel(date)}</div>`;
+    }
+
+    // Row classes
+    let cls = 'history-item';
+    if (isToday) cls += ' is-today';
+    if (isFuture && !isToday) cls += ' is-future';
+    if (!wd) cls += ' is-weekend';
+
+    const todayMark  = isToday ? ' 📍' : '';
+    const wdMark     = !wd ? ' ⛔' : '';
+    const inputCls   = count > 0 ? 'quick-input has-value' : 'quick-input';
+    const delBtn     = count > 0
+      ? `<button class="del-btn" onclick="clearEntry('${date}')" title="Очистить">✕</button>`
+      : '<span style="width:26px;display:inline-block"></span>';
+
+    html += `
+      <div class="${cls}" id="row-${date}">
+        <div class="history-date">${dayName}${todayMark}${wdMark}</div>
+        <div class="history-bar"><div class="history-bar-fill" style="width:${barPct}%"></div></div>
+        <input
+          type="number"
+          class="${inputCls}"
+          id="qi-${date}"
+          value="${count > 0 ? count : ''}"
+          min="0"
+          placeholder="—"
+          onchange="quickSave('${date}', this.value)"
+          onkeydown="if(event.key==='Enter') this.blur()"
+        />
+        ${delBtn}
       </div>`;
-  }).join('');
+  });
+
+  list.innerHTML = html;
 }
 
-function editRow(date) {
-  const row = document.getElementById('row-'+date);
-  const cnt = state.entries[date] || 0;
-  row.outerHTML = `
-    <div class="edit-row" id="edit-${date}">
-      <input type="date" id="ei_d_${date}" value="${date}" />
-      <input type="number" id="ei_c_${date}" value="${cnt}" min="0" placeholder="лиды" />
-      <button class="save-btn" onclick="saveRow('${date}')">OK</button>
-      <button class="cancel-btn" onclick="render()">Отмена</button>
-    </div>`;
-  document.getElementById('ei_c_'+date).focus();
+function quickSave(date, val) {
+  const n = parseInt(val);
+  if (isNaN(n) || n < 0) return;
+  if (n === 0) {
+    delete state.entries[date];
+  } else {
+    state.entries[date] = n;
+  }
+  save();
+  // Refresh bar + class without full re-render
+  const total  = getTotalLeads();
+  const goal   = state.goalTotal || 0;
+  const maxVal = Math.max(...Object.values(state.entries), 1);
+  const pct    = goal > 0 ? Math.min(100, Math.round(total/goal*100)) : 0;
+
+  document.getElementById('totalLeads').textContent  = total.toLocaleString();
+  document.getElementById('remaining').textContent   = goal ? Math.max(0,goal-total).toLocaleString() : '—';
+  document.getElementById('progressPct').textContent = pct+'%';
+  document.getElementById('progressFill').style.width= pct+'%';
+  document.getElementById('dailyNorm').textContent   = getDailyNorm() || '—';
+  document.getElementById('weeklyNorm').textContent  = getWeeklyNorm() || '—';
+
+  // Update bar for this row
+  const fill = document.querySelector(`#row-${date} .history-bar-fill`);
+  if (fill) fill.style.width = (n > 0 ? Math.min(100, n/maxVal*100) : 0)+'%';
+  const inp = document.getElementById('qi-'+date);
+  if (inp) inp.className = n > 0 ? 'quick-input has-value' : 'quick-input';
+
+  renderChart();
+  showToast(`Сохранено: ${date} → ${n}`);
 }
 
-function saveRow(old) {
-  const newDate  = document.getElementById('ei_d_'+old).value;
-  const newCount = parseInt(document.getElementById('ei_c_'+old).value) || 0;
-  if (!newDate) { showToast('Укажи дату'); return; }
-  if (old !== newDate) delete state.entries[old];
-  state.entries[newDate] = newCount;
-  save(); render();
-  showToast('Сохранено ✓');
-}
-
-function addNewRow() {
-  const list = document.getElementById('historyList');
-  const es = list.querySelector('.empty-state');
-  if (es) list.innerHTML = '';
-  const tid = 'new_'+Date.now();
-  list.insertAdjacentHTML('afterbegin', `
-    <div class="edit-row" id="${tid}">
-      <input type="date" id="ei_d_${tid}" value="${todayStr()}" />
-      <input type="number" id="ei_c_${tid}" value="" min="0" placeholder="лиды" />
-      <button class="save-btn" onclick="saveNewRow('${tid}')">OK</button>
-      <button class="cancel-btn" onclick="render()">Отмена</button>
-    </div>`);
-  document.getElementById('ei_c_'+tid).focus();
-}
-
-function saveNewRow(tid) {
-  const date  = document.getElementById('ei_d_'+tid).value;
-  const count = parseInt(document.getElementById('ei_c_'+tid).value) || 0;
-  if (!date) { showToast('Укажи дату'); return; }
-  state.entries[date] = (state.entries[date]||0) + count;
-  save(); render();
-  showToast(`+${count} лидов добавлено ✓`);
-}
-
-function deleteEntry(date) {
+function clearEntry(date) {
   delete state.entries[date];
   save(); render();
-  showToast('Запись удалена');
+  showToast('Запись очищена');
 }
 
-// ── CHART (bar, Y max = 50) ────────────────────────────────────────────────
+// ── CHART ─────────────────────────────────────────────────────────────────────
 const YMAX = 50;
-
 function renderChart() {
   const canvas = document.getElementById('chartCanvas');
   const ctx    = canvas.getContext('2d');
@@ -635,7 +712,12 @@ function renderChart() {
   ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, W, H);
 
-  const entries = Object.entries(state.entries).sort((a,b)=>a[0].localeCompare(b[0]));
+  // Only past & today entries
+  const today   = todayStr();
+  const entries = Object.entries(state.entries)
+    .filter(([d]) => d <= today)
+    .sort((a,b)=>a[0].localeCompare(b[0]));
+
   if (!entries.length) {
     ctx.fillStyle = 'rgba(255,255,255,0.15)';
     ctx.font = '13px Share Tech Mono'; ctx.textAlign = 'center';
@@ -648,14 +730,13 @@ function renderChart() {
   const gH  = H - pad.top  - pad.bottom;
   const N   = entries.length;
 
-  // Grid
   for (let v = 0; v <= YMAX; v += 10) {
     const y = pad.top + gH - (v/YMAX)*gH;
-    ctx.strokeStyle = v === 0 ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.05)';
-    ctx.lineWidth = 1; ctx.setLineDash([]);
-    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left+gW, y); ctx.stroke();
-    ctx.fillStyle = 'rgba(255,255,255,0.25)';
-    ctx.font = '9px Share Tech Mono'; ctx.textAlign = 'right';
+    ctx.strokeStyle = v===0 ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.05)';
+    ctx.lineWidth=1; ctx.setLineDash([]);
+    ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(pad.left+gW,y); ctx.stroke();
+    ctx.fillStyle='rgba(255,255,255,0.25)';
+    ctx.font='9px Share Tech Mono'; ctx.textAlign='right';
     ctx.fillText(v, pad.left-5, y+3);
   }
 
@@ -663,14 +744,13 @@ function renderChart() {
   const norm = getDailyNorm();
   if (norm > 0 && norm <= YMAX) {
     const ny = pad.top + gH - (norm/YMAX)*gH;
-    ctx.setLineDash([4,4]); ctx.strokeStyle = 'rgba(255,204,0,0.55)'; ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.moveTo(pad.left, ny); ctx.lineTo(pad.left+gW, ny); ctx.stroke();
+    ctx.setLineDash([4,4]); ctx.strokeStyle='rgba(255,204,0,0.55)'; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.moveTo(pad.left,ny); ctx.lineTo(pad.left+gW,ny); ctx.stroke();
     ctx.setLineDash([]);
-    ctx.fillStyle = 'rgba(255,204,0,0.7)'; ctx.font = '9px Share Tech Mono'; ctx.textAlign = 'left';
-    ctx.fillText('норма', pad.left+4, ny-4);
+    ctx.fillStyle='rgba(255,204,0,0.7)'; ctx.font='9px Share Tech Mono'; ctx.textAlign='left';
+    ctx.fillText('норма/день', pad.left+4, ny-4);
   }
 
-  // Bars
   const barW  = Math.max(5, Math.min(32, gW/N - 5));
   const xStep = gW / N;
 
@@ -680,29 +760,26 @@ function renderChart() {
     const y = pad.top + gH - h;
     if (h < 1) return;
 
-    const g = ctx.createLinearGradient(0, y, 0, pad.top+gH);
-    g.addColorStop(0, 'rgba(0,240,255,0.9)');
-    g.addColorStop(1, 'rgba(180,0,255,0.25)');
-    ctx.fillStyle = g;
-    ctx.shadowColor = 'rgba(0,240,255,0.45)'; ctx.shadowBlur = 8;
+    const g = ctx.createLinearGradient(0,y,0,pad.top+gH);
+    g.addColorStop(0,'rgba(0,240,255,0.9)');
+    g.addColorStop(1,'rgba(180,0,255,0.25)');
+    ctx.fillStyle=g;
+    ctx.shadowColor='rgba(0,240,255,0.45)'; ctx.shadowBlur=8;
     ctx.beginPath();
-    if (ctx.roundRect) ctx.roundRect(x, y, barW, h, [3,3,0,0]);
-    else ctx.rect(x, y, barW, h);
-    ctx.fill(); ctx.shadowBlur = 0;
+    if (ctx.roundRect) ctx.roundRect(x,y,barW,h,[3,3,0,0]);
+    else ctx.rect(x,y,barW,h);
+    ctx.fill(); ctx.shadowBlur=0;
 
-    // Value above bar
-    if (h > 14) {
-      ctx.fillStyle = 'rgba(255,255,255,0.65)';
-      ctx.font = 'bold 9px Share Tech Mono'; ctx.textAlign = 'center';
-      ctx.fillText(count > YMAX ? YMAX+'+' : count, x+barW/2, y-4);
+    if (h>14) {
+      ctx.fillStyle='rgba(255,255,255,0.65)';
+      ctx.font='bold 9px Share Tech Mono'; ctx.textAlign='center';
+      ctx.fillText(count>YMAX?YMAX+'+':count, x+barW/2, y-4);
     }
-
-    // X label
-    if (N <= 15 || i % Math.ceil(N/15) === 0 || i === N-1) {
-      const d = new Date(date+'T00:00:00');
-      const lbl = d.toLocaleDateString('ru-RU', {day:'2-digit', month:'short'});
-      ctx.fillStyle = 'rgba(255,255,255,0.3)';
-      ctx.font = '9px Share Tech Mono'; ctx.textAlign = 'center';
+    if (N<=15 || i%Math.ceil(N/15)===0 || i===N-1) {
+      const dl  = new Date(date+'T00:00:00');
+      const lbl = dl.toLocaleDateString('ru-RU',{day:'2-digit',month:'short'});
+      ctx.fillStyle='rgba(255,255,255,0.3)';
+      ctx.font='9px Share Tech Mono'; ctx.textAlign='center';
       ctx.fillText(lbl, x+barW/2, H-8);
     }
   });
@@ -711,16 +788,15 @@ function renderChart() {
 // ── UTILS ─────────────────────────────────────────────────────────────────────
 function updateCurrentDate() {
   document.getElementById('currentDate').textContent =
-    new Date().toLocaleDateString('ru-RU', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+    new Date().toLocaleDateString('ru-RU',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   setTimeout(updateCurrentDate, 60000);
 }
 function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2800);
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
 }
 window.addEventListener('resize', renderChart);
-
 init();
 </script>
 </body>
