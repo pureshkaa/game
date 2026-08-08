@@ -18,9 +18,7 @@
   body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,240,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,240,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
   body::after{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 20% 20%,rgba(180,0,255,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(0,240,255,0.06) 0%,transparent 50%);pointer-events:none;z-index:0;animation:bgPulse 8s ease-in-out infinite alternate;}
   @keyframes bgPulse{from{transform:rotate(0deg) scale(1);}to{transform:rotate(3deg) scale(1.05);}}
-
   .container{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:32px 24px 60px;}
-
   /* HEADER */
   header{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;gap:20px;flex-wrap:wrap;}
   .header-left{display:flex;align-items:center;gap:14px;}
@@ -29,24 +27,27 @@
   .logo-sub{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:4px;opacity:.6;}
   .header-right{display:flex;align-items:center;gap:10px;}
   .header-date{font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--muted);text-align:right;line-height:1.8;}
-
   /* sync indicator */
   .sync-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex-shrink:0;transition:all .3s;}
   .sync-dot.syncing{background:var(--yellow);box-shadow:0 0 8px var(--yellow);animation:syncPulse .8s ease-in-out infinite;}
   .sync-dot.error{background:var(--pink);box-shadow:0 0 8px var(--pink);}
   .sync-dot.offline{background:var(--muted);box-shadow:none;}
   @keyframes syncPulse{0%,100%{opacity:1;}50%{opacity:.4;}}
-
   .icon-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px 12px;cursor:pointer;font-size:16px;transition:all .2s;flex-shrink:0;}
   .icon-btn:hover{background:rgba(0,240,255,0.08);border-color:rgba(0,240,255,0.3);box-shadow:var(--glow-cyan);}
-
+  .icon-btn.spinning{animation:spin 1s linear infinite;}
+  @keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+  .sheet-sync-status{display:flex;align-items:center;gap:5px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--muted);white-space:nowrap;}
+  .sheet-sync-status .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);flex-shrink:0;}
+  .sheet-sync-status.syncing .dot{background:var(--yellow);box-shadow:0 0 6px var(--yellow);animation:syncPulse .8s ease-in-out infinite;}
+  .sheet-sync-status.error .dot{background:var(--pink);box-shadow:0 0 6px var(--pink);}
+  .sheet-sync-status.offline .dot{background:var(--muted);box-shadow:none;}
   /* SVG CAT */
   .cat-wrap{flex-shrink:0;cursor:default;animation:catFloat 3.5s ease-in-out infinite;}
   .cat-wrap:hover{animation:catBounce .4s ease;}
   @keyframes catFloat{0%,100%{transform:translateY(0) rotate(-1deg);}50%{transform:translateY(-5px) rotate(1deg);}}
   @keyframes catBounce{0%{transform:scale(1);}40%{transform:scale(1.2) rotate(-8deg);}80%{transform:scale(0.95) rotate(4deg);}100%{transform:scale(1) rotate(0deg);}}
   .cat-svg{filter:drop-shadow(0 0 6px rgba(0,240,255,0.55)) drop-shadow(0 0 14px rgba(180,0,255,0.3));}
-
   /* MODAL */
   .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:100;align-items:center;justify-content:center;}
   .modal-overlay.open{display:flex;}
@@ -70,7 +71,6 @@
   .btn-primary{background:linear-gradient(135deg,var(--cyan),var(--purple));color:#000;box-shadow:0 4px 20px rgba(0,240,255,0.3);}
   .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(0,240,255,0.5);}
   .btn-sm{width:auto;padding:8px 18px;font-size:10px;}
-
   /* STAT CARDS */
   .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 22px;position:relative;overflow:hidden;transition:transform .2s;backdrop-filter:blur(10px);}
@@ -84,7 +84,6 @@
   .card.pink .card-value{color:var(--pink);text-shadow:var(--glow-pink);}
   .card.green .card-value{color:var(--green);text-shadow:var(--glow-green);}
   .card-sub{font-size:13px;color:var(--muted);font-weight:300;}
-
   /* PROGRESS */
   .progress-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:24px;backdrop-filter:blur(10px);}
   .progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
@@ -93,7 +92,6 @@
   .progress-track{height:10px;background:rgba(255,255,255,0.06);border-radius:99px;overflow:visible;position:relative;}
   .progress-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));box-shadow:0 0 16px rgba(0,240,255,0.5),0 0 32px rgba(180,0,255,0.3);transition:width .8s cubic-bezier(0.34,1.56,0.64,1);position:relative;}
   .progress-fill::after{content:'';position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:16px;height:16px;border-radius:50%;background:white;box-shadow:0 0 12px var(--cyan),0 0 24px var(--purple);}
-
   /* MINI CALENDAR */
   .section-title{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:16px;}
   .mini-cal{position:fixed;top:20px;right:20px;z-index:50;width:168px;background:rgba(5,5,10,0.6);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:10px;backdrop-filter:blur(12px);opacity:0.3;transition:opacity .3s,box-shadow .3s,border-color .3s;}
@@ -113,15 +111,12 @@
   .mc-cell.has-data.today{box-shadow:inset 0 0 0 1px rgba(0,240,255,0.5);}
   .cal-tooltip{position:fixed;background:rgba(5,5,15,0.97);border:1px solid var(--cyan);box-shadow:var(--glow-cyan);border-radius:8px;padding:6px 12px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--cyan);pointer-events:none;opacity:0;transition:opacity .15s;z-index:300;white-space:nowrap;}
   .cal-tooltip.visible{opacity:1;}
-
   /* CHART */
   .chart-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:24px;backdrop-filter:blur(10px);}
   #chartCanvas{width:100%;display:block;}
-
   /* HISTORY */
   .history-section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;backdrop-filter:blur(10px);}
   .history-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-
   /* Past toggle */
   .past-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,0.02);transition:all .2s;margin-bottom:4px;width:100%;}
   .past-toggle:hover{color:var(--purple);border-color:rgba(180,0,255,0.3);background:rgba(180,0,255,0.05);}
@@ -129,7 +124,6 @@
   .past-toggle.open .arrow{transform:rotate(180deg);}
   .past-list{overflow:hidden;max-height:0;transition:max-height .4s cubic-bezier(0.4,0,0.2,1);}
   .past-list.open{max-height:2000px;}
-
   /* Add past date */
   .add-past-row{display:flex;align-items:center;gap:8px;padding:10px 0 6px;flex-wrap:wrap;}
   .add-past-row input[type="date"]{flex:0 0 150px;padding:7px 10px;font-size:13px;}
@@ -137,11 +131,9 @@
   .add-past-row .add-past-btn{background:linear-gradient(135deg,var(--cyan),var(--purple));border:none;border-radius:8px;padding:8px 14px;font-family:'Orbitron',monospace;font-size:9px;letter-spacing:2px;color:#000;font-weight:700;cursor:pointer;transition:opacity .2s;flex-shrink:0;}
   .add-past-btn:hover{opacity:.8;}
   .add-past-label{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(0,240,255,0.5);padding-bottom:4px;}
-
   /* Week divider */
   .week-divider{display:flex;align-items:center;gap:10px;padding:10px 0 4px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(180,0,255,0.45);text-transform:uppercase;}
   .week-divider::before,.week-divider::after{content:'';flex:1;height:1px;background:rgba(180,0,255,0.12);}
-
   /* Row */
   .history-item{display:flex;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);gap:12px;}
   .history-item:last-child{border-bottom:none;}
@@ -157,18 +149,16 @@
   .del-btn{background:none;border:none;color:rgba(255,60,60,0.3);cursor:pointer;font-size:12px;padding:4px 6px;border-radius:6px;transition:all .2s;flex-shrink:0;opacity:0;}
   .history-item:hover .del-btn{opacity:1;}
   .del-btn:hover{color:#ff4444;background:rgba(255,0,0,0.1);}
-
+  .synced-mark{color:rgba(0,255,136,0.7);}
   /* TOAST */
   .toast{position:fixed;bottom:30px;right:30px;background:rgba(10,10,20,0.95);border:1px solid var(--cyan);box-shadow:var(--glow-cyan);border-radius:12px;padding:14px 20px;font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--cyan);transform:translateY(80px);opacity:0;transition:all .4s cubic-bezier(0.34,1.56,0.64,1);z-index:1000;}
   .toast.show{transform:translateY(0);opacity:1;}
-
   @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
   .card,.progress-section,.chart-section,.history-section{animation:fadeIn .5s ease forwards;}
 </style>
 </head>
 <body>
 <div class="container">
-
   <!-- HEADER -->
   <header>
     <div class="header-left">
@@ -213,11 +203,14 @@
         <div id="currentDate"></div>
         <div id="daysLeftEl" style="color:var(--cyan);font-size:13px;margin-top:4px;"></div>
       </div>
+      <div class="sheet-sync-status" id="sheetSyncStatus" title="Синхронизация с Google Таблицей">
+        <span class="dot"></span><span id="sheetSyncLabel">таблица: —</span>
+      </div>
+      <button class="icon-btn" id="sheetSyncBtn" onclick="syncFromSheet(true)" title="Обновить из таблицы сейчас">🔄</button>
       <div class="sync-dot" id="syncDot" title="Статус синхронизации"></div>
       <button class="icon-btn" onclick="openSettings()" title="Настройки">✏️</button>
     </div>
   </header>
-
   <!-- STAT CARDS -->
   <div class="stats-grid">
     <div class="card cyan">
@@ -241,7 +234,6 @@
       <div class="card-sub">недель: <span id="weeksLeft">—</span></div>
     </div>
   </div>
-
   <!-- PROGRESS -->
   <div class="progress-section">
     <div class="progress-header">
@@ -252,19 +244,16 @@
       <div class="progress-fill" id="progressFill" style="width:0%"></div>
     </div>
   </div>
-
   <!-- CHART -->
   <div class="chart-section">
     <div class="section-title">📊 динамика по дням</div>
     <canvas id="chartCanvas" height="180"></canvas>
   </div>
-
   <!-- HISTORY -->
   <div class="history-section">
     <div class="history-header">
       <div class="section-title" style="margin-bottom:0">🗂 история</div>
     </div>
-
     <!-- PAST (collapsed) -->
     <button class="past-toggle" id="pastToggle" onclick="togglePast()">
       <span class="arrow">▲</span>
@@ -283,13 +272,11 @@
       </div>
       <div id="pastRows"></div>
     </div>
-
     <div style="height:6px"></div>
     <!-- FUTURE (today + 10 days) -->
     <div id="futureList"></div>
   </div>
 </div>
-
 <!-- MINI CALENDAR -->
 <div class="mini-cal" id="miniCal">
   <div class="mini-cal-nav">
@@ -299,16 +286,13 @@
   </div>
   <div class="mini-cal-grid" id="calGrid"></div>
 </div>
-
 <!-- TOOLTIP -->
 <div class="cal-tooltip" id="calTooltip"></div>
-
 <!-- SETTINGS MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeOnBg(event)">
   <div class="modal">
     <button class="modal-close" onclick="closeSettings()">✕</button>
     <div class="modal-title">✏️ Настройки</div>
-
     <!-- Goal settings -->
     <div class="modal-section">
       <div class="modal-section-title">🎯 Цель</div>
@@ -325,7 +309,6 @@
         <input type="date" id="s_deadline"/>
       </div>
     </div>
-
     <!-- Cloud sync -->
     <div class="modal-section">
       <div class="modal-section-title">☁️ Синхронизация между устройствами</div>
@@ -343,35 +326,31 @@
         <div class="input-hint">После первого сохранения сюда появится ID — скопируй его на другие устройства</div>
       </div>
     </div>
-
     <button class="btn btn-primary" onclick="saveSettings()">СОХРАНИТЬ</button>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
-
 <script>
 // ── HOLIDAYS ──────────────────────────────────────────────────────────────────
 const RU_HOLIDAYS=new Set(['01-01','01-02','01-03','01-04','01-05','01-06','01-07','01-08','02-23','03-08','05-01','05-09','06-12','11-04']);
 function isWorkDay(d){const dt=new Date(d),day=dt.getDay();if(day===0||day===6)return false;const mm=String(dt.getMonth()+1).padStart(2,'0'),dd=String(dt.getDate()).padStart(2,'0');return!RU_HOLIDAYS.has(`${mm}-${dd}`);}
 function countWorkDays(from,to){let n=0;const c=new Date(from);c.setHours(0,0,0,0);const e=new Date(to);e.setHours(0,0,0,0);while(c<=e){if(isWorkDay(c))n++;c.setDate(c.getDate()+1);}return n;}
-
 // ── WEEKS Thu→Thu ─────────────────────────────────────────────────────────────
 function getWeekStart(ds){const d=new Date(ds);d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()-4+7)%7));return d;}
 function getRemainingWeeks(){if(!state.deadline)return null;const t=new Date();t.setHours(0,0,0,0);const dl=new Date(state.deadline);dl.setHours(0,0,0,0);if(dl<=t)return 0;const dtn=t.getDay()===4?7:(4-t.getDay()+7)%7;const nx=new Date(t);nx.setDate(nx.getDate()+dtn);let w=0;const c=new Date(nx);while(c<=dl){w++;c.setDate(c.getDate()+7);}return w;}
-
 // ── STATE ─────────────────────────────────────────────────────────────────────
-let state={goalName:'',goalTotal:0,deadline:'',entries:{}};
+// Google Sheet this dashboard reads leads from — baked in, nothing to configure.
+const SHEET_ID='1o1jTOVVaNN3u9T2BCyut5FWuoKbD0ggDQuFBOLRhLvo';
+const SHEET_TAB='ЛИДЫ';
+const SHEET_DATE_COL='Дата';
+let state={goalName:'',goalTotal:0,deadline:'',entries:{},syncedDates:[],lastSheetSync:''};
 let cfg={apiKey:'',binId:''};   // stored separately in localStorage (never synced to cloud)
-
 const todayStr=()=>new Date().toISOString().slice(0,10);
 const saveLocal=()=>localStorage.setItem('leads_v5',JSON.stringify(state));
 const saveCfg=()=>localStorage.setItem('leads_cfg',JSON.stringify(cfg));
-
 // ── JSONBIN SYNC ───────────────────────────────────────────────────────────────
 const BIN_URL='https://api.jsonbin.io/v3/b';
 let syncTimer=null;
-
 function setSyncStatus(s){
   // s: 'ok' | 'syncing' | 'error' | 'offline'
   const dot=document.getElementById('syncDot');
@@ -379,7 +358,6 @@ function setSyncStatus(s){
   const labels={ok:'Синхронизировано',syncing:'Синхронизация...',error:'Ошибка синхронизации',offline:'Локально (нет ключа)'};
   dot.title=labels[s]||s;
 }
-
 async function cloudLoad(){
   if(!cfg.apiKey||!cfg.binId){setSyncStatus('offline');return;}
   setSyncStatus('syncing');
@@ -394,7 +372,6 @@ async function cloudLoad(){
     console.warn('CloudLoad error',e);
   }
 }
-
 async function cloudSave(){
   saveLocal();
   if(!cfg.apiKey){setSyncStatus('offline');return;}
@@ -420,12 +397,108 @@ async function cloudSave(){
     showToast('Ошибка сохранения в облако');
   }
 }
-
 function scheduleSave(){
   clearTimeout(syncTimer);
   syncTimer=setTimeout(cloudSave,1200);
 }
-
+// ── GOOGLE SHEET AUTO-SYNC ───────────────────────────────────────────────────
+// Reads the "ЛИДЫ" sheet, counts how many rows fall on each date, and writes
+// that count straight into state.entries for every date the sheet has data for.
+// The manual "add for a past date" / quick-edit inputs still work as before —
+// they just get overwritten by the sheet's own number next time it re-syncs.
+//
+// Loaded via Google's own JSONP mechanism (a <script> tag hitting gviz/tq with
+// a responseHandler callback) rather than fetch() — script tags aren't subject
+// to CORS, so this works straight from a local file with zero setup, as long
+// as the sheet is viewable by anyone with the link (no "publish" step needed).
+function loadSheetJSONP(sheetId,tabName,timeoutMs){
+  return new Promise((resolve,reject)=>{
+    const cbName='__leadsSheetCB_'+Date.now()+'_'+Math.floor(Math.random()*1e6);
+    let done=false;
+    const scriptEl=document.createElement('script');
+    const timer=setTimeout(()=>{finish(()=>reject(new Error('таймаут запроса к таблице')));},timeoutMs||15000);
+    function finish(cb){
+      if(done)return;
+      done=true;
+      clearTimeout(timer);
+      delete window[cbName];
+      if(scriptEl.parentNode)scriptEl.parentNode.removeChild(scriptEl);
+      cb();
+    }
+    window[cbName]=function(data){finish(()=>resolve(data));};
+    scriptEl.onerror=()=>finish(()=>reject(new Error('не удалось загрузить таблицу (нет сети или лист недоступен)')));
+    scriptEl.src=`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json;responseHandler:${cbName}&sheet=${encodeURIComponent(tabName)}&_ts=${Date.now()}`;
+    document.head.appendChild(scriptEl);
+  });
+}
+function gvizCellToISO(cell){
+  if(!cell)return null;
+  // Prefer the formatted display string (matches what's shown in the sheet, e.g. "02.07.2026")
+  if(cell.f)return parseSheetDateToISO(cell.f);
+  const v=cell.v;
+  if(v==null)return null;
+  if(typeof v==='string'){
+    const m=v.match(/^Date\((\d+),(\d+),(\d+)/);
+    if(m)return`${m[1]}-${String(+m[2]+1).padStart(2,'0')}-${m[3].padStart(2,'0')}`;
+    return parseSheetDateToISO(v);
+  }
+  return null;
+}
+function parseSheetDateToISO(raw){
+  if(!raw)return null;
+  let s=String(raw).trim().split(' ')[0]; // drop time part if present
+  let m=s.match(/^(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{4})$/);
+  if(m)return`${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;
+  m=s.match(/^(\d{4})[.\/-](\d{1,2})[.\/-](\d{1,2})$/);
+  if(m)return`${m[1]}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`;
+  return null;
+}
+function setSheetSyncStatus(s,label){
+  const el=document.getElementById('sheetSyncStatus');
+  const btn=document.getElementById('sheetSyncBtn');
+  if(!el)return;
+  el.className='sheet-sync-status '+s;
+  document.getElementById('sheetSyncLabel').textContent=label||({syncing:'синхронизация...',error:'ошибка связи'}[s]||'—');
+  if(btn)btn.classList.toggle('spinning',s==='syncing');
+}
+let sheetSyncing=false;
+async function syncFromSheet(manual){
+  if(sheetSyncing)return;
+  sheetSyncing=true;
+  setSheetSyncStatus('syncing');
+  try{
+    const data=await loadSheetJSONP(SHEET_ID,SHEET_TAB,15000);
+    if(!data||!data.table)throw new Error('пустой ответ от таблицы');
+    const cols=data.table.cols||[];
+    let dateIdx=cols.findIndex(c=>(c.label||'').trim().toLowerCase()===SHEET_DATE_COL.toLowerCase());
+    if(dateIdx===-1)dateIdx=cols.findIndex(c=>(c.label||'').toLowerCase().includes('дат'));
+    if(dateIdx===-1)throw new Error('не найдена колонка "'+SHEET_DATE_COL+'" в листе «'+SHEET_TAB+'»');
+    const rows=data.table.rows||[];
+    const counts={};
+    rows.forEach(row=>{
+      const iso=gvizCellToISO(row.c&&row.c[dateIdx]);
+      if(!iso)return;
+      counts[iso]=(counts[iso]||0)+1;
+    });
+    const foundDates=Object.keys(counts);
+    if(!foundDates.length)throw new Error('в таблице нет дат');
+    foundDates.forEach(d=>{state.entries[d]=counts[d];});
+    state.syncedDates=foundDates.sort();
+    state.lastSheetSync=new Date().toISOString();
+    saveLocal();
+    render();renderCalendar();
+    scheduleSave();
+    const t=new Date(state.lastSheetSync).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+    setSheetSyncStatus('ok',`таблица: ✓ ${t} (${foundDates.length} дат)`);
+    if(manual)showToast(`Обновлено из таблицы: ${foundDates.length} дат ✓`);
+  }catch(e){
+    console.warn('Sheet sync error',e);
+    setSheetSyncStatus('error','таблица: ошибка');
+    if(manual)showToast('Ошибка синхронизации с таблицей: '+e.message);
+  }finally{
+    sheetSyncing=false;
+  }
+}
 // ── INIT ──────────────────────────────────────────────────────────────────────
 async function init(){
   const lc=localStorage.getItem('leads_cfg');
@@ -433,20 +506,20 @@ async function init(){
   const ls=localStorage.getItem('leads_v5');
   if(ls)state=JSON.parse(ls);
   else{const old=localStorage.getItem('leads_v4');if(old){state=JSON.parse(old);saveLocal();}}
-
+  if(!state.syncedDates)state.syncedDates=[];
   updateCurrentDate();
   calYear=new Date().getFullYear();calMonth=new Date().getMonth();
-
   // Set default date for past input
   document.getElementById('pastInputDate').value=todayStr();
-
   render();renderCalendar();
-
   // Load from cloud (overrides local if newer)
   await cloudLoad();
+  if(!state.syncedDates)state.syncedDates=[];
   render();renderCalendar();
+  // Pull latest leads from the Google Sheet, then keep it fresh
+  syncFromSheet(false);
+  setInterval(()=>syncFromSheet(false),5*60*1000);
 }
-
 // ── SETTINGS ──────────────────────────────────────────────────────────────────
 function openSettings(){
   document.getElementById('s_goalName').value=state.goalName||'';
@@ -470,14 +543,12 @@ async function saveSettings(){
   await cloudSave();
   showToast('Настройки сохранены ✓');
 }
-
 // ── CALC ──────────────────────────────────────────────────────────────────────
 function getTotalLeads(){return Object.values(state.entries).reduce((a,b)=>a+b,0);}
 function getWorkDaysLeft(){if(!state.deadline)return null;const t=new Date();t.setHours(0,0,0,0);const dl=new Date(state.deadline);dl.setHours(0,0,0,0);if(dl<=t)return 0;const tom=new Date(t);tom.setDate(tom.getDate()+1);return countWorkDays(tom,dl);}
 function getCalDaysLeft(){if(!state.deadline)return null;const t=new Date();t.setHours(0,0,0,0);const dl=new Date(state.deadline);dl.setHours(0,0,0,0);return Math.max(0,Math.ceil((dl-t)/86400000));}
 function getDailyNorm(){const rem=(state.goalTotal||0)-getTotalLeads(),wdl=getWorkDaysLeft();if(!wdl||rem<=0)return 0;return Math.ceil(rem/wdl);}
 function getWeeklyNorm(){const rem=(state.goalTotal||0)-getTotalLeads(),w=getRemainingWeeks();if(!w||rem<=0)return 0;return Math.ceil(rem/w);}
-
 // ── RENDER ────────────────────────────────────────────────────────────────────
 function render(){
   const total=getTotalLeads(),goal=state.goalTotal||0,rem=Math.max(0,goal-total);
@@ -497,7 +568,6 @@ function render(){
   renderHistory();
   renderChart();
 }
-
 // ── PAST ENTRY ────────────────────────────────────────────────────────────────
 function addPastEntry(){
   const date=document.getElementById('pastInputDate').value;
@@ -512,7 +582,6 @@ function addPastEntry(){
   // Auto-open past if not open
   if(!pastOpen)togglePast();
 }
-
 // ── HISTORY ───────────────────────────────────────────────────────────────────
 let pastOpen=false;
 function togglePast(){
@@ -521,9 +590,7 @@ function togglePast(){
   document.getElementById('pastToggle').classList.toggle('open',pastOpen);
   document.getElementById('pastHint').textContent=pastOpen?'СКРЫТЬ':'РАСКРЫТЬ';
 }
-
 function getWeekLabel(ds){const ws=getWeekStart(ds);const we=new Date(ws);we.setDate(we.getDate()+6);const f=d=>d.toLocaleDateString('ru-RU',{day:'2-digit',month:'short'});return`${f(ws)} — ${f(we)}`;}
-
 function makeRow(date,maxVal){
   const count=state.entries[date]||0;
   const dt=new Date(date+'T00:00:00');
@@ -537,9 +604,10 @@ function makeRow(date,maxVal){
   if(!wd)cls+=' is-weekend';
   const todayMark=isToday?' 📍':'';
   const wdMark=!wd?' ⛔':'';
+  const syncedMark=(state.syncedDates||[]).includes(date)?' <span class="synced-mark" title="Подтянуто из таблицы">☁</span>':'';
   const delBtn=count>0?`<button class="del-btn" onclick="clearEntry('${date}')">✕</button>`:'<span style="width:26px;display:inline-block"></span>';
   return`<div class="${cls}" id="row-${date}">
-    <div class="h-date">${dayName}${todayMark}${wdMark}</div>
+    <div class="h-date">${dayName}${todayMark}${wdMark}${syncedMark}</div>
     <div class="h-bar"><div class="h-bar-fill" style="width:${barPct}%"></div></div>
     <input type="number" class="quick-input${count>0?' has-value':''}" id="qi-${date}"
       value="${count>0?count:''}" min="0" placeholder="—"
@@ -548,15 +616,12 @@ function makeRow(date,maxVal){
     ${delBtn}
   </div>`;
 }
-
 function renderHistory(){
   const today=todayStr();
   const maxVal=Math.max(...Object.values(state.entries),1);
-
   // Past: all dates before today that have entries, sorted asc (oldest top, newest bottom)
   const pastDates=Object.keys(state.entries).filter(d=>d<today).sort((a,b)=>a.localeCompare(b));
   document.getElementById('pastLabel').textContent=`предыдущие дни (${pastDates.length})`;
-
   let pastHtml='';let lastWk=null;
   pastDates.forEach(date=>{
     const wk=getWeekStart(date).toISOString().slice(0,10);
@@ -564,12 +629,10 @@ function renderHistory(){
     pastHtml+=makeRow(date,maxVal);
   });
   document.getElementById('pastRows').innerHTML=pastHtml;
-
   // Future: today + 10 days
   const futureDates=[];
   const base=new Date();base.setHours(0,0,0,0);
   for(let i=0;i<=10;i++){const d=new Date(base);d.setDate(d.getDate()+i);futureDates.push(d.toISOString().slice(0,10));}
-
   let futHtml='';let lastFWk=null;
   futureDates.forEach(date=>{
     const wk=getWeekStart(date).toISOString().slice(0,10);
@@ -578,7 +641,6 @@ function renderHistory(){
   });
   document.getElementById('futureList').innerHTML=futHtml;
 }
-
 function quickSave(date,val){
   const n=parseInt(val);
   if(isNaN(n)||n<0)return;
@@ -598,7 +660,6 @@ function quickSave(date,val){
   showToast('Сохранено ✓');
 }
 function clearEntry(date){delete state.entries[date];render();renderCalendar();scheduleSave();showToast('Очищено');}
-
 // ── MINI CALENDAR ─────────────────────────────────────────────────────────────
 let calYear,calMonth;
 function calShift(d){calMonth+=d;if(calMonth>11){calMonth=0;calYear++;}if(calMonth<0){calMonth=11;calYear--;}renderCalendar();}
@@ -642,7 +703,6 @@ function bindCalTooltip(){
   };
   grid.onmouseleave=()=>calTooltip.classList.remove('visible');
 }
-
 // ── CHART ─────────────────────────────────────────────────────────────────────
 const YMAX=50;
 function renderChart(){
@@ -669,12 +729,10 @@ function renderChart(){
     if(N<=15||i%Math.ceil(N/15)===0||i===N-1){const dl=new Date(date+'T00:00:00');ctx.fillStyle='rgba(255,255,255,0.3)';ctx.font='9px Share Tech Mono';ctx.textAlign='center';ctx.fillText(dl.toLocaleDateString('ru-RU',{day:'2-digit',month:'short'}),x+barW/2,H-8);}
   });
 }
-
 // ── UTILS ─────────────────────────────────────────────────────────────────────
 function updateCurrentDate(){document.getElementById('currentDate').textContent=new Date().toLocaleDateString('ru-RU',{weekday:'long',year:'numeric',month:'long',day:'numeric'});setTimeout(updateCurrentDate,60000);}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 window.addEventListener('resize',renderChart);
-
 init();
 </script>
 </body>
